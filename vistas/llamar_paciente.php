@@ -1,7 +1,9 @@
 <?php
 include "../modelos/tickets.php";
+include "../clases/Sesion.php";
+$sesion=new Sesion();
 $modulo=new Tickets();
-$pertenece=2;
+$pertenece=$sesion->getEstacion_pertenece();
 $estaciones=$modulo->getEstaciones($pertenece);
 $estacionPertenece=$modulo->getEstacionPertenece($pertenece);
 ?>
@@ -15,6 +17,9 @@ $estacionPertenece=$modulo->getEstacionPertenece($pertenece);
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
     <script src="../js/bootstrap.min.js"></script>
+    <script>
+        var est=<?= $pertenece;?>;
+    </script>
     <script src="../funciones_generales.js"></script>
     <style>
         .estaciones{
@@ -30,20 +35,11 @@ $estacionPertenece=$modulo->getEstacionPertenece($pertenece);
     <div class="panel panel-primary">
         <div class="panel-heading">
             ADMINISTRACIÓN DE COLAS <span style="float: right;text-decoration: underline;"><strong>Estación: <?php echo $estacionPertenece[0]["nombre"]."/".utf8_decode($estacionPertenece[0]["descripcion"]);?></strong></span><br>
-            <div style="color: white;"><a href="../clases/cerrar_sesion.php"><span class="glyphicon glyphicon-log-out"></span>Salir</a></div>
+            <br><div style="text-align: right;"><a style="color: white;" href="../clases/cerrar_sesion.php"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesión</a></div>
         </div>
         <div class="panel-body">
             <div class="row" style="text-align: center;" id="contOpcion">
-                <div class="col-sm-12" >
-                    <!--div class="input-group">
-                        <select class="form-control selEstacion" id="selNormas" style="width: auto">
-                            <?php
-                            foreach($estaciones as $k=>$v){
-                                echo "<option value='".$v["id"]."'>".$v["nombre"]."</option>";
-                            }
-                            ?>
-                        </select>
-                    </div-->
+                <div class="col-sm-12">
                     <a class="btn btn-success estaciones" id="llamar"><span class="glyphicon glyphicon-ok-circle"></span>Llamar Paciente</a><br><br>
                     <a class="btn btn-primary estaciones" id="trasladar"><span class="glyphicon glyphicon-ok-circle"></span>Trasladar Paciente</a><br><br>
                     <a class="btn btn-danger estaciones" id="cerrar"><span class="glyphicon glyphicon-ok-circle"></span>Cerrar Ticket</a><br><br>

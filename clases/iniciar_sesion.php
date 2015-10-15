@@ -8,7 +8,7 @@ try {
     $sesion->crear_sesion($usuario, $clave);
 
     if ($sesion->sesion_iniciada() == true) {
-        $sesion->redirigir();
+        header("location:../");
     }
     else {
         header("Location: ../index.php");

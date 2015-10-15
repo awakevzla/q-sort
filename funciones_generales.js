@@ -1,4 +1,3 @@
-var est=2;
 $(document).ready(function () {
     $("#contEstaciones").hide();
     $('#boton').attr("disabled", true);

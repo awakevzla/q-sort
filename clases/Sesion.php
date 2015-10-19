@@ -44,16 +44,49 @@ class Sesion
         $sql = "SELECT * from usuarios WHERE login=lower('$usuario') and clave=md5('$clave');";
         $stm=$this->con->consulta_bd($sql);
         $datos=$this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
-        $cant=$this->con->obtener_numero_registros($stm);
-        if (count($cant)==1){
+        $sql = "SELECT * from usuarios WHERE login=lower('$usuario');";
+        $stm=$this->con->consulta_bd($sql);
+        $usuario=$this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
+        if (count($datos)==1 && $datos[0]["baneado"]==0){
             $this->setLogin($datos[0]["login"]);
             $this->setApellido_usuario($datos[0]["apellido"]);
             $this->setNombre_usuario($datos[0]["nombre"]);
             $this->setId_usuario($datos[0]["id"]);
             $this->setTipo_usuario($datos[0]["tipo_id"]);
             $this->setEstacion_pertenece($datos[0]["estacion_id"]);
+            $resp["resp"]=1;
+            $sql="update usuarios set intentos = 0 WHERE login=lower('".$usuario[0]["login"]."')";
+            $this->con->consulta_bd($sql);
+            return $resp;
+        }else if (count($datos)==1 && $datos[0]["baneado"]==1){
+            $resp["resp"]=2;
+            $resp["motivo"]="baneado";
+            return $resp;
+        }else if(count($datos)==0){
+            if (count($usuario)>0){
+                $resp["resp"]=2;
+                $resp["motivo"]="claveInvalida";
+                $sql="update usuarios set intentos = intentos+1 WHERE login=lower('".$usuario[0]["login"]."')";
+                $this->con->consulta_bd($sql);
+                $sql = "SELECT intentos from usuarios WHERE login=lower('".$usuario[0]["login"]."');";
+                $stm=$this->con->consulta_bd($sql);
+                $intentos=$this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
+                if ($intentos[0]["intentos"]>10){
+                    $sql="update usuarios set baneado = 1 WHERE login=lower('".$usuario[0]["login"]."')";
+                    $this->con->consulta_bd($sql);
+                    $resp["resp"]=2;
+                    $resp["motivo"]="baneado";
+                    return $resp;
+                }
+            }else{
+                $resp["resp"]=2;
+                $resp["motivo"]="usuarioInvalido";
+            }
+            return $resp;
         }else{
-            header("location:../index.php?error=clave");
+            $resp["resp"]=2;
+            $resp["motivo"]="otro";
+            return $resp;
         }
     }
 
@@ -135,7 +168,7 @@ class Sesion
 
     function redirigir(){
         if ($this->tipo_usuario==1){
-            header("location:vistas/llamar_paciente.php");
+            header("location:login.php");
         }else{
 
         }

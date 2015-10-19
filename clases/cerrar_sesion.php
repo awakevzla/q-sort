@@ -8,7 +8,7 @@ try{
 	if($sesion->sesion_iniciada()==true)
 		$sesion->destruir_sesion();
 	
-		header("Location: ../index.php");
+		header("Location: ../login.php");
 
 }catch (Exception $e){
 	echo $e->getMessage();

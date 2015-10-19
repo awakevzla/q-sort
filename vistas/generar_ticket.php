@@ -13,7 +13,7 @@ $estaciones=$ticket->getEstaciones(0);
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/generar_ticket.js"></script>
+    <script src="../js/generar_ticket.js?r=<?=date('d-m-Y H:i:s')?>"></script>
     <style>
         .estaciones{
             width: 500px;
@@ -23,8 +23,8 @@ $estaciones=$ticket->getEstaciones(0);
         }
     </style>
 </head>
-<body style="padding: 0 30px;">
-<div class="container">
+<body style="padding: 0;">
+<div class="container" style="width: 100%;padding: 0;">
     <div class="panel panel-primary">
         <div class="panel-heading">ADMINISTRACIÓN DE COLAS</div>
         <div class="panel-body">

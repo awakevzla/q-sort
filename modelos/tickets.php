@@ -49,7 +49,16 @@ class Tickets
     }
 
     function getEstaciones($pertenece){
-        $sql="SELECT id, nombre, prefijo from estaciones where id!=$pertenece;";
+        $sql="SELECT id, nombre, prefijo from estaciones where id!=$pertenece AND activo=TRUE;";
+        $this->con->abrir_conexion();
+        $stm=$this->con->consulta_bd($sql);
+        $arrayEstaciones=$this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
+        $this->con->cerrar_conexion();
+        return $arrayEstaciones;
+    }
+
+    function getTodasEstaciones(){
+        $sql="SELECT id, nombre, prefijo from estaciones WHERE activo=TRUE;";
         $this->con->abrir_conexion();
         $stm=$this->con->consulta_bd($sql);
         $arrayEstaciones=$this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
@@ -58,7 +67,7 @@ class Tickets
     }
 
     function getEstacionPertenece($pertenece){
-        $sql="SELECT id, nombre, descripcion from estaciones where id=$pertenece;";
+        $sql="SELECT id, nombre, descripcion from estaciones where id=$pertenece AND activo=TRUE;";
         $this->con->abrir_conexion();
         $stm=$this->con->consulta_bd($sql);
         $arrayEstaciones=$this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
@@ -73,7 +82,7 @@ class Tickets
         $stm=$this->con->consulta_bd($sql);
         $ticket=$this->con->obtener_fila_consulta($stm, Sql::ARRAY_ASOCIATIVO);
         if($ticket){
-            $sql = "SELECT COUNT(id) as clEspera FROM cola WHERE  cola.estacion_id=$est and cola.estado_id=1";
+            $sql = "SELECT COUNT(id) as clEspera FROM cola WHERE  cola.estacion_id=$est and cola.estado_id=1 and date_format(fecha_hora_inicio, '%d-m-Y') = date_format(CURDATE(), '%d-m-Y')";
             $this->con->abrir_conexion();
             $stm=$this->con->consulta_bd($sql);
             $Cespera=$this->con->obtener_fila_consulta($stm, Sql::ARRAY_ASOCIATIVO);
@@ -188,5 +197,34 @@ class Tickets
 
         //alert(misql);
 
+    }
+    function getColas(){
+        $conex=new Sql();
+        $conex->abrir_conexion();
+        $sql="SELECT
+          cola.id        AS cola_id,
+          est.nombre     AS estacion,
+          est.id         AS estacion_id,
+          ticket,
+          estado_id,
+          estados.nombre AS estados
+        FROM cola
+          JOIN estaciones est ON est.id = cola.estacion_id
+          JOIN estados ON estados.id = cola.estado_id
+        WHERE date(cola.fecha_hora_inicio) = CURDATE();";
+        $stm=$conex->consulta_bd($sql);
+        $Result=array();
+        $arrayR=array();
+        $arrayColas=$conex->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
+        foreach ($arrayColas as $k=>$v){
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estado_id"]=$v["estado_id"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estacion_id"]=$v["estacion_id"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["ticket"]=$v["ticket"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estado"]=$v["estados"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estacion"]=$v["estacion"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["cola_id"]=$v["cola_id"];
+        }
+        $Result["porEstacion"]=$arrayR;
+        return $Result;
     }
 }

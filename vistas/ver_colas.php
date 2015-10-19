@@ -8,7 +8,6 @@ if ($sesion->sesion_iniciada() == false) {
 }
 $modulo->getTodasEstaciones();
 $arrayColas=$modulo->getColas();
-echo json_encode($arrayColas);
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,8 +33,7 @@ echo json_encode($arrayColas);
 <div class="container" style="width: 100%;padding: 0;">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            Ver Colas <span
-                style="float: right;text-decoration: underline;"><strong>Estación: <?php echo $estacionPertenece[0]["nombre"] . "/" . utf8_decode($estacionPertenece[0]["descripcion"]); ?></strong></span>
+            Ver Colas
         </div>
         <div class="panel-body">
             <div class="row">

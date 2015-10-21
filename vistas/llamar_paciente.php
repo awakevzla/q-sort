@@ -20,6 +20,7 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../css/vistas.css">
     <script src="../js/bootstrap.min.js"></script>
     <script>
         var est =<?= $pertenece;?>;
@@ -46,9 +47,10 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
                 <div class="col-sm-12">
                     <a class="btn btn-success estaciones" id="llamar"><span
                             class="glyphicon glyphicon-bell"></span></span> Llamar Paciente</a><br><br>
-                    <a class="btn btn-primary estaciones" id="trasladar"><span
-                            class="glyphicon glyphicon-ok-circle"></span> Trasladar Paciente</a><br><br>
-                    <a class="btn btn-danger estaciones" id="cerrar"><span class="glyphicon glyphicon-ok-circle"></span> Cerrar
+                    <a class="btn btn-primary estaciones" id="trasladar"><i class="fa fa-exchange"></i> Trasladar
+                        Paciente</a><br><br>
+                    <a class="btn btn-danger estaciones" id="cerrar"><span
+                            class="glyphicon glyphicon-ban-circle"></span> Cerrar
                         Ticket</a><br><br>
                 </div>
             </div>
@@ -75,7 +77,7 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading" style="text-align: center;"><p>ATENDIENDO</p></div>
+                        <div class="panel-heading" style="text-align: center;"><p>ATENDIENDO / ESTACIÓN: <b><?php echo strtoupper($estacionPertenece[0]["nombre"])?></b></p></div>
                         <div class="panel-body">
                             <label class="form-control" style="height: auto;">Ticket: <span id="ticket"> ---/--- </span></label>
                             <label class="form-control" style="height: auto;">Clientes en espera: <span

@@ -9,6 +9,7 @@ if ($sesion->sesion_iniciada() == false) {
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Llamar Paciente</title>
     <script src="js/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -23,6 +24,13 @@ if ($sesion->sesion_iniciada() == false) {
             height: 100px;
             font-size: 40px;
             text-align: left;
+        }
+        body{
+            background: url("img/guadalupe.jpg") no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
         }
     </style>
 </head>

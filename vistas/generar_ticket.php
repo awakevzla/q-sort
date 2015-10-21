@@ -12,6 +12,7 @@ $estaciones=$ticket->getEstaciones(0);
     <!-- Bootstrap -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../css/vistas.css">
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/generar_ticket.js?r=<?=date('d-m-Y H:i:s')?>"></script>
     <style>

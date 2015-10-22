@@ -6,7 +6,6 @@ $modulo = new Tickets();
 if ($sesion->sesion_iniciada() == false) {
     header('location:../login.php');
 }
-$modulo->getTodasEstaciones();
 $arrayColas=$modulo->getColas();
 ?>
 <!DOCTYPE html>
@@ -21,6 +20,7 @@ $arrayColas=$modulo->getColas();
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="../css/vistas.css">
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/estadisticas.js"></script>
     <style>
         .estaciones {
             width: 500px;
@@ -37,10 +37,28 @@ $arrayColas=$modulo->getColas();
             Ver Colas
         </div>
         <div class="panel-body">
-            <div class="row">
-                <div class="col-">
-
-                </div>
+            <div style="background-color: rgba(255,255,255,0.7);">
+            <table id="tabColas" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Estación</th>
+                        <th>Atención</th>
+                        <th colspan="4" style="text-align: center;">En Espera</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>IMAGENEOLOGÍA</td>
+                        <td>IMG-001</td>
+                        <td>IMG-002</td>
+                        <td>IMG-003</td>
+                        <td>IMG-004</td>
+                        <td>IMG-005</td>
+                        <td><a class="btn btn-info">Ver Mas</a></td>
+                    </tr>
+                </tbody>
+            </table>
             </div>
         </div>
     </div>

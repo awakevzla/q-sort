@@ -77,7 +77,7 @@ class Tickets
 
     function getAtendiendo($est){
 
-        $sql = "SELECT id, ticket, 0 as clEspera from cola WHERE estacion_id=$est and estado_id=2;";
+        $sql = "SELECT id, ticket, 0 as clEspera from cola WHERE estacion_id=$est and estado_id=2 and date_format(fecha_hora_inicio, '%d-m-Y') = date_format(CURDATE(), '%d-m-Y');";
         $this->con->abrir_conexion();
         $stm=$this->con->consulta_bd($sql);
         $ticket=$this->con->obtener_fila_consulta($stm, Sql::ARRAY_ASOCIATIVO);
@@ -225,6 +225,7 @@ class Tickets
             $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["cola_id"]=$v["cola_id"];
         }
         $Result["porEstacion"]=$arrayR;
+        $Result["estaciones"]=$this->getTodasEstaciones();
         return $Result;
     }
 }

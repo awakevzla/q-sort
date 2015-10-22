@@ -26,11 +26,11 @@ if ($sesion->sesion_iniciada() == false) {
             text-align: left;
         }
         body{
-            background: url("img/guadalupe.jpg") no-repeat center center fixed;
+            /*background: url("img/guadalupe.jpg") no-repeat center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
-            background-size: cover;
+            background-size: cover;*/
         }
     </style>
 </head>
@@ -47,7 +47,7 @@ if ($sesion->sesion_iniciada() == false) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Q-sort</a>
+                <a class="navbar-brand" href="">Q-sort</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -96,8 +96,19 @@ if ($sesion->sesion_iniciada() == false) {
         <!-- /.container-fluid -->
     </nav>
     <div id="frame" style="width:100%;height: 100%;padding: 0;margin: 0;">
-        <iframe id="iFrame" style="min-width: 100%;min-height: 100%;" src="vistas/llamar_paciente.php"
+        <?php
+        if ($sesion->getTipo_usuario() == 1){
+        ?>
+            <iframe id="iFrame" style="min-width: 100%;min-height: 100%;" src="vistas/ver_colas.php"
                 frameborder="0"></iframe>
+        <?php
+        }else{
+            ?>
+            <iframe id="iFrame" style="min-width: 100%;min-height: 100%;" src="vistas/llamar_paciente.php"
+                    frameborder="0"></iframe>
+            <?php
+        }
+        ?>
     </div>
 </div>
 </body>

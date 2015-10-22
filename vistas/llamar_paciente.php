@@ -45,13 +45,13 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
         <div class="panel-body">
             <div class="row" style="text-align: center;" id="contOpcion">
                 <div class="col-sm-12">
-                    <a class="btn btn-success estaciones" id="llamar"><span
-                            class="glyphicon glyphicon-bell"></span></span> Llamar Paciente</a><br><br>
-                    <a class="btn btn-primary estaciones" id="trasladar"><i class="fa fa-exchange"></i> Trasladar
-                        Paciente</a><br><br>
-                    <a class="btn btn-danger estaciones" id="cerrar"><span
+                    <button class="btn btn-success estaciones" id="llamar"><span
+                            class="glyphicon glyphicon-bell"></span></span> Llamar Paciente</button><br><br>
+                    <button class="btn btn-primary estaciones" id="trasladar"><i class="fa fa-exchange"></i> Trasladar
+                        Paciente</button><br><br>
+                    <button class="btn btn-danger estaciones" id="cerrar"><span
                             class="glyphicon glyphicon-ban-circle"></span> Cerrar
-                        Ticket</a><br><br>
+                        Ticket</button><br><br>
                 </div>
             </div>
             <br>
@@ -67,8 +67,8 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
                         <?php
                     }
                     ?>
-                    <a class="btn btn-danger estaciones" id="volver" style="text-align: left;"><span
-                            class="glyphicon glyphicon-ok-circle"></span>Volver</a><br><br>
+                    <button class="btn btn-danger estaciones" id="volver" style="text-align: left;"><span
+                            class="glyphicon glyphicon-ok-circle"></span>Volver</button><br><br>
                 </div>
             </div>
             <br>

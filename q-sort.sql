@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-10-2015 a las 16:49:54
+-- Tiempo de generación: 22-10-2015 a las 17:02:14
 -- Versión del servidor: 5.5.44-0+deb8u1
 -- Versión de PHP: 5.6.7-1
 
@@ -34,47 +34,26 @@ CREATE TABLE IF NOT EXISTS `cola` (
   `fecha_hora_fin` timestamp NULL DEFAULT NULL,
   `estacion_id` int(11) NOT NULL,
   `estado_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `cola`
 --
 
 INSERT INTO `cola` (`id`, `correlativo`, `ticket`, `fecha_hora_inicio`, `fecha_hora_fin`, `estacion_id`, `estado_id`) VALUES
-(1, '001', 'APS-001', '2015-10-07 15:48:53', NULL, 2, 3),
-(2, '002', 'APS-002', '2015-10-07 15:49:20', NULL, 2, 3),
-(3, '003', 'APS-003', '2015-10-07 15:50:57', NULL, 2, 3),
-(4, '004', 'APS-004', '2015-10-07 15:51:05', NULL, 2, 3),
-(5, '005', 'APS-005', '2015-10-07 16:19:36', NULL, 2, 3),
-(6, '006', 'APS-006', '2015-10-07 16:19:38', NULL, 2, 3),
-(7, '007', 'APS-007', '2015-10-07 16:19:39', NULL, 2, 3),
-(8, '008', 'APS-008', '2015-10-07 16:19:41', NULL, 2, 3),
-(9, '009', 'LAB-009', '2015-10-07 17:43:46', NULL, 1, 1),
-(10, '010', 'APS-010', '2015-10-07 17:43:49', NULL, 2, 3),
-(11, '011', 'IMG-011', '2015-10-07 17:43:50', NULL, 3, 1),
-(12, '012', 'APS-012', '2015-10-07 17:43:51', NULL, 2, 3),
-(13, '013', 'IMG-013', '2015-10-07 17:43:52', NULL, 3, 1),
-(14, '014', 'LAB-014', '2015-10-07 17:43:52', NULL, 1, 1),
-(15, '015', 'LAB-015', '2015-10-07 17:43:53', NULL, 1, 1),
-(16, '016', 'IMG-016', '2015-10-07 17:43:54', NULL, 3, 1),
-(17, '017', 'APS-017', '2015-10-07 17:43:54', NULL, 2, 3),
-(18, '018', 'APS-018', '2015-10-07 17:43:54', NULL, 2, 3),
-(19, '019', 'APS-019', '2015-10-07 17:43:55', NULL, 2, 3),
-(20, '020', 'APS-020', '2015-10-07 17:43:55', NULL, 2, 3),
-(21, '021', 'APS-021', '2015-10-07 17:43:55', NULL, 2, 3),
-(22, '022', 'APS-022', '2015-10-07 17:43:56', NULL, 2, 3),
-(23, '023', 'APS-023', '2015-10-07 17:43:56', NULL, 2, 3),
-(24, '024', 'APS-024', '2015-10-07 17:43:56', NULL, 2, 3),
-(25, '025', 'APS-025', '2015-10-07 17:43:56', NULL, 2, 3),
-(26, '026', 'APS-026', '2015-10-07 17:46:06', NULL, 2, 3),
-(27, '027', 'APS-027', '2015-10-07 17:46:07', NULL, 2, 3),
-(28, '028', 'APS-028', '2015-10-07 17:46:08', NULL, 2, 3),
-(29, '029', 'APS-029', '2015-10-07 17:46:09', NULL, 2, 3),
-(30, '030', 'APS-030', '2015-10-07 17:46:10', NULL, 2, 3),
-(31, '031', 'APS-031', '2015-10-07 17:55:00', NULL, 2, 3),
-(32, '032', 'APS-032', '2015-10-07 17:55:01', NULL, 2, 3),
-(33, '033', 'APS-033', '2015-10-07 17:55:02', NULL, 2, 3),
-(34, '034', 'APS-034', '2015-10-07 17:56:09', NULL, 2, 3);
+(1, '001', 'APS-001', '2015-10-22 19:45:36', NULL, 2, 3),
+(2, '002', 'APS-002', '2015-10-22 19:45:37', NULL, 2, 3),
+(3, '003', 'APS-003', '2015-10-22 19:45:37', NULL, 2, 3),
+(4, '004', 'APS-004', '2015-10-22 19:45:38', NULL, 2, 3),
+(5, '005', 'IMG-005', '2015-10-22 19:52:52', NULL, 3, 1),
+(6, '006', 'IMG-006', '2015-10-22 19:52:53', NULL, 3, 1),
+(7, '007', 'IMG-007', '2015-10-22 19:52:53', NULL, 3, 1),
+(8, '008', 'IMG-008', '2015-10-22 19:52:53', NULL, 3, 1),
+(9, '009', 'APS-009', '2015-10-22 19:53:02', NULL, 2, 2),
+(10, '010', 'APS-010', '2015-10-22 19:53:03', NULL, 2, 1),
+(11, '011', 'APS-011', '2015-10-22 19:53:03', NULL, 2, 1),
+(12, '012', 'APS-012', '2015-10-22 19:53:14', NULL, 2, 1),
+(13, '013', 'APS-013', '2015-10-22 19:53:15', NULL, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -86,17 +65,18 @@ CREATE TABLE IF NOT EXISTS `estaciones` (
 `id` int(11) NOT NULL,
   `nombre` varchar(150) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `descripcion` varchar(300) COLLATE utf8_spanish2_ci NOT NULL,
-  `prefijo` varchar(6) COLLATE utf8_spanish2_ci NOT NULL
+  `prefijo` varchar(6) COLLATE utf8_spanish2_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `estaciones`
 --
 
-INSERT INTO `estaciones` (`id`, `nombre`, `descripcion`, `prefijo`) VALUES
-(1, 'Laboratorio', 'Estación donde se realizan exámenes de sangre', 'LAB'),
-(2, 'APS', 'Atención Primaria de Salud', 'APS'),
-(3, 'Imagenologia', 'Estación para realizar exámenes de rayos x y otros.', 'IMG');
+INSERT INTO `estaciones` (`id`, `nombre`, `descripcion`, `prefijo`, `activo`) VALUES
+(1, 'Laboratorio', 'Estación donde se realizan exámenes de sangre', 'LAB', 1),
+(2, 'APS', 'Atención Primaria de Salud', 'APS', 1),
+(3, 'Imagenologia', 'Estación para realizar exámenes de rayos x y otros.', 'IMG', 1);
 
 -- --------------------------------------------------------
 
@@ -107,7 +87,7 @@ INSERT INTO `estaciones` (`id`, `nombre`, `descripcion`, `prefijo`) VALUES
 CREATE TABLE IF NOT EXISTS `estados` (
 `id` int(11) NOT NULL,
   `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `estados`
@@ -116,8 +96,26 @@ CREATE TABLE IF NOT EXISTS `estados` (
 INSERT INTO `estados` (`id`, `nombre`) VALUES
 (1, 'En Cola'),
 (2, 'Atendiendo'),
-(3, 'Cerrado'),
-(4, 'otro');
+(3, 'Cerrado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipos`
+--
+
+CREATE TABLE IF NOT EXISTS `tipos` (
+`id` int(11) NOT NULL,
+  `nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `tipos`
+--
+
+INSERT INTO `tipos` (`id`, `nombre`) VALUES
+(1, 'Administrador'),
+(2, 'Usuario');
 
 -- --------------------------------------------------------
 
@@ -143,6 +141,33 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `user`, `pass`, `level`, `opciones`, `conectado`, `escaner`, `ocupado`) VALUES
 (1, 'admin', '123456', 'a', '1,2,3 / 1,2,3,4,5', 1, 1, 0);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE IF NOT EXISTS `usuarios` (
+`id` int(11) NOT NULL,
+  `login` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `clave` varchar(32) COLLATE utf8_spanish2_ci NOT NULL,
+  `nombre` varchar(150) COLLATE utf8_spanish2_ci NOT NULL,
+  `apellido` varchar(150) COLLATE utf8_spanish2_ci NOT NULL,
+  `tipo_id` int(11) NOT NULL,
+  `estacion_id` int(11) DEFAULT NULL,
+  `intentos` int(11) NOT NULL DEFAULT '0',
+  `baneado` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `login`, `clave`, `nombre`, `apellido`, `tipo_id`, `estacion_id`, `intentos`, `baneado`) VALUES
+(1, 'plugo', 'e10adc3949ba59abbe56e057f20f883e', 'Pedro', 'Lugo', 1, 2, 0, 0),
+(2, 'efrain', 'e10adc3949ba59abbe56e057f20f883e', 'Efrain', 'Rodriguez', 1, 1, 0, 0),
+(3, 'usuario', 'e10adc3949ba59abbe56e057f20f883e', 'usuario', 'usuario', 2, 3, 0, 0);
+
 --
 -- Índices para tablas volcadas
 --
@@ -166,10 +191,22 @@ ALTER TABLE `estados`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `tipos`
+--
+ALTER TABLE `tipos`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `login` (`login`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -179,7 +216,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `cola`
 --
 ALTER TABLE `cola`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `estaciones`
 --
@@ -189,12 +226,22 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `tipos`
+--
+ALTER TABLE `tipos`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- Restricciones para tablas volcadas
 --

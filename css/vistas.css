@@ -1,6 +1,24 @@
+
 body{
     background-color: transparent;/*rgba(255,255,255,0.3);*/
 }
 .container .panel{
     background-color: rgba(255,255,255,0.4);
+}
+@media only screen and (max-width: 500px) {
+    .container{
+        color:red;
+        padding: 0;
+        border: 1px solid black;
+    }
+    body{
+        padding: 0;
+        border: 1px solid black;
+    }
+    .estaciones {
+        width: 100px;
+        height: 30px;
+        font-size: 10px;
+        text-align: left;
+    }
 }

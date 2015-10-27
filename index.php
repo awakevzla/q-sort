@@ -9,13 +9,14 @@ if ($sesion->sesion_iniciada() == false) {
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llamar Paciente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Q-Sort Sistema de Administradción de Colas</title>
     <script src="js/jquery.min.js"></script>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="css/vistas.css">
     <script src="js/bootstrap.min.js"></script>
     <script src="js/eventos.js"></script>
     <style>
@@ -25,17 +26,10 @@ if ($sesion->sesion_iniciada() == false) {
             font-size: 40px;
             text-align: left;
         }
-        body{
-            /*background: url("img/guadalupe.jpg") no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;*/
-        }
     </style>
 </head>
-<body style="padding: 0 30px;">
-<div class="container" style="width: 100%;height: 90vh;">
+<body style="padding: 0px;">
+<div class="container" style="width: 100%;height: 90vh;padding: 0;">
     <nav class="navbar navbar-inverse" style="margin-bottom: 0;">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -79,7 +73,7 @@ if ($sesion->sesion_iniciada() == false) {
                             <?php
                             if ($sesion->getTipo_usuario() == 1) {
                                 ?>
-                                <li><a class="menu" href="#"><span class="glyphicon glyphicon-align-justify"></span>
+                                <li><a class="menu" href="vistas/gestionar_usuarios.php"><span class="glyphicon glyphicon-align-justify"></span>
                                         Gestión de Usuario</a></li>
                                 <?php
                             }

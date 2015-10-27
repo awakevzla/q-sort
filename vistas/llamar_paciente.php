@@ -20,7 +20,6 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="../css/vistas.css">
     <script src="../js/bootstrap.min.js"></script>
     <script>
         var est =<?= $pertenece;?>;
@@ -32,6 +31,23 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
             height: 70px;
             font-size: 40px;
             text-align: left;
+        }
+        @media only screen and (max-width: 500px) {
+            .container{
+                color:red;
+                padding: 0;
+                border: 1px solid black;
+            }
+            body{
+                padding: 0;
+                border: 1px solid black;
+            }
+            .estaciones {
+                width: 200px;
+                height: 30px;
+                font-size: 10px;
+                text-align: left;
+            }
         }
     </style>
 </head>

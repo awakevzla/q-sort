@@ -72,9 +72,25 @@ $tipos=$User->getTipos();
                                     ?>
                                 </select>
                             </div>
+                            <label for="password" class="col-sm-1 control-label">Clave</label>
+                            <div class="col-sm-3">
+                                <input type="password" id="password" class="form-control">
+                            </div>
+                            <label for="password_2" class="col-sm-1 control-label">Repita Clave</label>
+                            <div class="col-sm-3">
+                                <input type="password" id="password_2" class="form-control">
+                            </div>
                         </div>
-                        <div class="form-group">
-
+                        <div class="row" id="registrar">
+                            <div class="col-md-3 col-md-offset-6">
+                                <a class="btn btn-success" id="btnRegistrar"><span class="glyphicon glyphicon-floppy-save"></span> Registrar</a>
+                            </div>
+                        </div>
+                        <div class="row" id="modificar" style="display: none;">
+                            <div class="col-md-3 col-md-offset-6">
+                                <a class="btn btn-warning" id="btnModificar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</a>
+                                <a class="btn btn-danger" id="btnModificar"><span class="glyphicon glyphicon-floppy-remove"></span> Cancelar</a>
+                            </div>
                         </div>
                     </div>
                     <table id="tabUsuarios" class="table table-bordered">

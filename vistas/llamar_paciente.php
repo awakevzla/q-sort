@@ -36,11 +36,9 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
             .container{
                 color:red;
                 padding: 0;
-                border: 1px solid black;
             }
             body{
                 padding: 0;
-                border: 1px solid black;
             }
             .estaciones {
                 width: 200px;

@@ -22,33 +22,34 @@ if (isset($_GET["r"])){
 }
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<header>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesion</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
-    <script src="js/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-</header>
-<body>
-<form action="clases/iniciar_sesion.php" method="post">
-    <div class="panel panel-primary" style="max-width: 500px;margin: 0 auto;">
-        <div class="panel-heading" style="text-align: center;"><p>Iniciar Sesión</p></div>
-        <div class="panel-body" style="text-align: center;">
-            <input type="text" placeholder="Usuario" name="usuario" class="form-control"><br>
-            <input type="password" placeholder="******" name="clave" class="form-control"><br>
-            <button type="submit" class="btn btn-success">
-                <span class="glyphicon glyphicon-log-in"></span>&nbsp; Iniciar
-            </button>
-        </div>
-        <div class="panel-footer"><p></p></div>
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="align">
+<div class="site__container">
+
+    <div class="grid__container">
+        <form action="clases/iniciar_sesion.php" method="post" class="form form--login">
+            <div class="form__field">
+                <label class="fontawesome-user" for="login__username"><i class="fa fa-user"></i></label>
+                <input id="login__username" type="text" name="usuario" class="form__input" placeholder="Usuario" required>
+            </div>
+            <div class="form__field">
+                <label class="fontawesome-lock" for="login__password"><i class="fa fa-certificate"></i></label>
+                <input id="login__password" type="password" name="clave" class="form__input" placeholder="Clave" required>
+            </div>
+            <div class="form__field">
+                <input type="submit" value="Ingresar">
+            </div>
+        </form>
     </div>
-</form>
+
+</div>
 </body>
-<script>
-    $("input[type=text]").focus();
-</script>
 </html>

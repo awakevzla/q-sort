@@ -22,6 +22,21 @@ $estaciones=$ticket->getEstaciones(0);
             font-size: 50px;
             text-align: left;
         }
+        @media only screen and (max-width: 500px) {
+            .container{
+                color:red;
+                padding: 0;
+            }
+            body{
+                padding: 0;
+            }
+            .estaciones {
+                width: 200px;
+                height: 30px;
+                font-size: 10px;
+                text-align: left;
+            }
+        }
     </style>
 </head>
 <body style="padding: 0;">

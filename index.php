@@ -26,6 +26,12 @@ if ($sesion->sesion_iniciada() == false) {
             font-size: 40px;
             text-align: left;
         }
+        html{
+            background: url("img/guadalupe.jpg");
+            background-size: cover;
+            background-repeat: space;
+            background-attachment: fixed;
+        }
     </style>
 </head>
 <body style="padding: 0px;">

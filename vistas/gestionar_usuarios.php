@@ -12,6 +12,7 @@ if ($sesion->getTipo_usuario()!=1){
 }
 $usuarios=$User->getUsuarios();
 $tipos=$User->getTipos();
+$estaciones=$User->getEstaciones();
 ?>
 <!DOCTYPE html>
 <html>
@@ -72,6 +73,19 @@ $tipos=$User->getTipos();
                                     ?>
                                 </select>
                             </div>
+                            <label for="selEstacion" class="col-sm-1 control-label">Estación</label>
+                            <div class="col-sm-3">
+                                <select id="selEstacion" class="form-control">
+                                    <option value="0">Seleccione...</option>
+                                    <?php
+                                    foreach ($estaciones as $k=>$v) {
+                                        echo "<option value='".$v["id"]."'>".$v["nombre"]."</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="password" class="col-sm-1 control-label">Clave</label>
                             <div class="col-sm-3">
                                 <input type="password" id="password" class="form-control">
@@ -89,16 +103,18 @@ $tipos=$User->getTipos();
                         <div class="row" id="modificar" style="display: none;">
                             <div class="col-md-3 col-md-offset-6">
                                 <a class="btn btn-warning" id="btnModificar"><span class="glyphicon glyphicon-floppy-save"></span> Guardar</a>
-                                <a class="btn btn-danger" id="btnModificar"><span class="glyphicon glyphicon-floppy-remove"></span> Cancelar</a>
+                                <a class="btn btn-danger" id="btnCancelar"><span class="glyphicon glyphicon-floppy-remove"></span> Cancelar</a>
                             </div>
                         </div>
                     </div>
+                    <input type="text" id="tempId" value="" style="display: none;">
                     <table id="tabUsuarios" class="table table-bordered">
                         <thead>
                         <tr>
                             <th>Login</th>
                             <th>Nombre y apellido</th>
                             <th>Tipo</th>
+                            <th>Estacion</th>
                             <th>Baneado</th>
                             <th>Acciones</th>
                         </tr>
@@ -110,10 +126,11 @@ $tipos=$User->getTipos();
                             echo "<td>".$v["login"]."</td>";
                             echo "<td>".$v["nombre_completo"]."</td>";
                             echo "<td>".$v["tipo"]."</td>";
+                            echo "<td>".$v["estacion"]."</td>";
                             echo "<td>".$v["baneado"]."</td>";
                             echo "<td style='width: 180px;'>
-                                <a class='btn btn-danger eliminar' data-toggle='tooltip' data-nombre='".$v["nombre"]."' data-apellido='".$v["apellido"]."' data-login='".$v["login"]."' data-tipo='".$v["tipo_id"]."' data-id=".$v["id"]." data-placement='top' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></a>
-                                <a class='btn btn-warning modificar' data-toggle='tooltip' data-id=".$v["id"]." data-placement='top' title='Modificar'><span class='glyphicon glyphicon-edit'></span></a>
+                                <a class='btn btn-danger eliminar' data-toggle='tooltip' data-placement='top' data-id=".$v["id"]." title='Eliminar'><span class='glyphicon glyphicon-remove'></span></a>
+                                <a class='btn btn-warning modificar' data-toggle='tooltip' data-nombre='".$v["nombre"]."' data-estacion='".$v["estacion_id"]."' data-apellido='".$v["apellido"]."' data-login='".$v["login"]."' data-estacion data-tipo='".$v["tipo_id"]."' data-id=".$v["id"]." data-placement='top' title='Modificar'><span class='glyphicon glyphicon-edit'></span></a>
                                 <a class='btn btn-default bloquear' data-toggle='tooltip' data-id=".$v["id"]." data-placement='top' title='Bloquear'><i class='fa fa-lock'></i></a>
                                 <a class='btn btn-success desbloquear' data-toggle='tooltip' data-id=".$v["id"]." data-placement='top' title='Desbloquear'><i class='fa fa-unlock'></i></a>
                                 </td>";

@@ -77,17 +77,17 @@ class Tickets
 
     function getAtendiendo($est){
 
-        $sql = "SELECT id, ticket, 0 as clEspera from cola WHERE estacion_id=$est and estado_id=2 and date_format(fecha_hora_inicio, '%d-m-Y') = date_format(CURDATE(), '%d-m-Y');";
+        $sql = "SELECT id, ticket, 0 as clEspera, correlativo from cola WHERE estacion_id=$est and estado_id=2 and date_format(fecha_hora_inicio, '%d-m-Y') = date_format(CURDATE(), '%d-m-Y');";
         $this->con->abrir_conexion();
         $stm=$this->con->consulta_bd($sql);
         $ticket=$this->con->obtener_fila_consulta($stm, Sql::ARRAY_ASOCIATIVO);
-        if($ticket){
+        //if($ticket){
             $sql = "SELECT COUNT(id) as clEspera FROM cola WHERE  cola.estacion_id=$est and cola.estado_id=1 and date_format(fecha_hora_inicio, '%d-m-Y') = date_format(CURDATE(), '%d-m-Y')";
             $this->con->abrir_conexion();
             $stm=$this->con->consulta_bd($sql);
             $Cespera=$this->con->obtener_fila_consulta($stm, Sql::ARRAY_ASOCIATIVO);
             $ticket["clEspera"]=$Cespera["clEspera"];
-        }
+        //}
         return $ticket;
     }
 
@@ -228,4 +228,27 @@ class Tickets
         $Result["estaciones"]=$this->getTodasEstaciones();
         return $Result;
     }
+
+    function cerrarTicket($id){
+        $conex=new Sql();
+        $conex->abrir_conexion();
+        $sql="UPDATE cola SET fecha_hora_fin=CURRENT_TIMESTAMP, estado_id=3 where id=$id";
+        $conex->consulta_bd($sql);
+    }
+
+    function trasladarPaciente($estacion_origen, $estacion_destino){
+        $conex=new Sql();
+        $conex->abrir_conexion();
+        $atendiendo=$this->getAtendiendo($estacion_origen);
+        $id = $atendiendo["id"];
+        if ($id){
+            $this->cerrarTicket($id);
+        }else{
+            return "No hay paciente en atencion";
+        }
+        $sql="INSERT INTO cola (correlativo, ticket, estacion_id, estado_id) VALUES ('".$atendiendo["correlativo"]."', '".$atendiendo["ticket"]."', $estacion_destino, 1)";
+        $conex->consulta_bd($sql);
+        return 1;
+    }
+
 }

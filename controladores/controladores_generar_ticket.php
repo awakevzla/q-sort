@@ -17,10 +17,15 @@ switch ($band) {
     case 'llamarPaciente':
         $est = $_REQUEST["est"];
         $id_atend = $ticket->getAtendiendo($est);
-        if ($id_atend) {// Si esta atendiendo a un paciente -> cambia el estatus a despachado
+        if (isset($id_atend["id"])) {// Si esta atendiendo a un paciente -> cambia el estatus a despachado
             $result = $ticket->generasql("cola", "estado_id", 3, true, true, "where id=" . $id_atend["id"], true);
         }
         $result = $ticket->getSigPaciente($est);
         echo json_encode($result);
+        break;
+    case 'trasladarPaciente':
+        $estacion_destino=$_REQUEST["estacion_destino"];
+        $estacion_origen=$_REQUEST["estacion_origen"];
+        echo $ticket->trasladarPaciente($estacion_origen, $estacion_destino);
         break;
 }

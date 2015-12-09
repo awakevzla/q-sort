@@ -75,7 +75,7 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
                     <?php
                     foreach ($estaciones as $k => $v) {
                         ?>
-                        <a class="btn btn-primary estaciones" style="text-align: left;"
+                        <a class="btn btn-primary estaciones trasladar" style="text-align: left;"
                            data-id="<?php echo $v["id"]; ?>"><span
                                 class="glyphicon glyphicon-ok-circle"></span><?php echo $v["nombre"]; ?></a><br><br>
                         <?php

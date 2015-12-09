@@ -27,6 +27,7 @@ if (isset($_GET["r"])){
 <head>
     <meta charset="UTF-8">
     <title>Iniciar Sesion</title>
+    <link rel="shortcut icon" href="img/logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="css/style.css">
@@ -36,6 +37,9 @@ if (isset($_GET["r"])){
 
     <div class="grid__container">
         <form action="clases/iniciar_sesion.php" method="post" class="form form--login">
+            <div style="text-align: center;">
+                <img src="img/logo_sinfondo.png" alt="logo">
+            </div>
             <div class="form__field">
                 <label class="fontawesome-user" for="login__username"><i class="fa fa-user"></i></label>
                 <input id="login__username" type="text" name="usuario" class="form__input" placeholder="Usuario" required>

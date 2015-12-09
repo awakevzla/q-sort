@@ -10,6 +10,7 @@ if ($sesion->sesion_iniciada() == false) {
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="img/logo.png">
     <title>Q-Sort Sistema de Administradción de Colas</title>
     <script src="js/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -47,7 +48,7 @@ if ($sesion->sesion_iniciada() == false) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="">Q-sort</a>
+                <a class="navbar-brand" href="" style="text-align: center;padding-top:9px;"><span style="content: url('img/logo_sinfondo.png');width: 30px;"></span></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

@@ -48,15 +48,6 @@ $arrayColas=$modulo->getColas();
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>IMAGENEOLOGÍA</td>
-                        <td>IMG-001</td>
-                        <td>IMG-002</td>
-                        <td>IMG-003</td>
-                        <td>IMG-004</td>
-                        <td>IMG-005</td>
-                        <td><a class="btn btn-info">Ver Mas</a></td>
-                    </tr>
                 </tbody>
             </table>
             </div>

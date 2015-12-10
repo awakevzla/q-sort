@@ -41,6 +41,14 @@ function trasladarPaciente(est, id){
         },
         success:function(response){
             console.log(response);
+            if (response=="1"){
+                alert("Fue trasladado el paciente exitósamente!");
+            }else{
+                alert("Ocurrió un inconveniente al trasladar al paciente, intente nuevamente o comuníquese con el administrador");
+                location.reload();
+            }
+            console.log("va a llamar atendiendo");
+            atendiendo(est);
         }
     });
 }
@@ -56,10 +64,9 @@ function atendiendo(est){
             console.log(resp);
         },
         success:function(response){
-            if (response["respuesta"]==null){   // SI NO ESTA ATENDIENDO A NADIE
-                $("#ticket").html("Ninguno");
+            if (response["respuesta"]==null || response["correlativo"]==undefined){   // SI NO ESTA ATENDIENDO A NADIE
+                $("#ticket").html("---/---");
                 $("#ticket").attr("data-id_atend",0);
-                $("#ticket").html("0");
                 return;
             }
             console.log(response);

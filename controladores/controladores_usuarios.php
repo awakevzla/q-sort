@@ -1,5 +1,7 @@
 <?php
 include_once '../modelos/usuarios.php';
+include "../clases/Sesion.php";
+$sesion = new Sesion();
 $usuarios=new Usuario();
 $band=$_REQUEST["band"];
 switch ($band){
@@ -39,5 +41,11 @@ switch ($band){
         $estacion=$_REQUEST["estacion"];
         $id=$_REQUEST["id"];
         echo $usuarios->modificarUsuario($login, $nombres, $apellidos, $tipo, $clave, $estacion, $id);
+        break;
+    case 'cambiarClave':
+        $clave_anterior=$_REQUEST["clave_anterior"];
+        $clave_nueva=$_REQUEST["clave_nueva"];
+        $usuario_id=$sesion->getId_usuario();
+        echo $usuarios->cambiarClave($usuario_id, $clave_anterior, $clave_nueva);
         break;
 }

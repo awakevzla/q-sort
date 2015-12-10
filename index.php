@@ -76,7 +76,7 @@ if ($sesion->sesion_iniciada() == false) {
                            aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Cuenta <span
                                 class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="menu" href="#"><i class="fa fa-user"></i> Cambiar Clave</a></li>
+                            <li><a class="menu" href="vistas/cambiar_clave.php"><i class="fa fa-user"></i> Cambiar Clave</a></li>
                             <?php
                             if ($sesion->getTipo_usuario() == 1) {
                                 ?>

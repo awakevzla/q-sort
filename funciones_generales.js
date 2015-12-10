@@ -64,15 +64,18 @@ function atendiendo(est){
             console.log(resp);
         },
         success:function(response){
-            if (response["respuesta"]==null || response["correlativo"]==undefined){   // SI NO ESTA ATENDIENDO A NADIE
+            console.log(response);
+            response=response.respuesta;
+            console.log(response.correlativo);
+            if (response["correlativo"]==undefined){   // SI NO ESTA ATENDIENDO A NADIE
                 $("#ticket").html("---/---");
                 $("#ticket").attr("data-id_atend",0);
                 return;
             }
             console.log(response);
-            $("#ticket").html(response["respuesta"]["ticket"]);
-            $("#clEspera").html(response["respuesta"]["clEspera"]);
-            $("#ticket").attr("data-idatend", parseInt(response["respuesta"]["id"]));
+            $("#ticket").html(response["correlativo"]);
+            $("#clEspera").html(response["clEspera"]);
+            $("#ticket").attr("data-idatend", parseInt(response["id"]));
         }
     });
 }

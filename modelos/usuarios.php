@@ -99,4 +99,13 @@ class Usuario
         $this->con->guardar_transaccion();
         return 1;
     }
+    function cambiarClave($usuario_id, $clave_anterior, $clave_nueva){
+        if (!intval($usuario_id)){
+            return 'usuario invalido';
+        }
+        $sql="SELECT clave from usuarios WHERE id=$usuario_id";
+        $stm=$this->con->consulta_bd($sql);
+        $array=$this->con->obtener_array_consulta($stm, Sql::ARRAY_INDEXADO);
+        $clave=$array[0]["clave"];
+    }
 }

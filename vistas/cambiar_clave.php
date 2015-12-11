@@ -26,6 +26,12 @@ if ($sesion->sesion_iniciada() == false) {
             font-size: 40px;
             text-align: left;
         }
+        @media only screen and (max-width: 500px) {
+            .input-group-addon{
+                width: 100px;
+                font-size: 8px;
+            }
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -71,7 +77,22 @@ if ($sesion->sesion_iniciada() == false) {
                             console.log(resp);
                         },
                         success:function(response){
-                            console.log(response);
+                            if (response==1){
+                                alert("Actualización exitosa!");
+                                location.reload();
+                            }else{
+                                if (response=='usuario'){
+                                    alert("Ocurrió un error con su usuario, intente nuevamente o comuníquese con el administrador del sistema!");
+                                    return;
+                                }else if(response=='clave'){
+                                    alert("Clave anterior incorrecta, intente nuevamente o comuníquese con el administrador del sistema");
+                                    return;
+                                }
+                                else{
+                                    alert("Ocurrió un inconveniente, intente nuevamente o comuníquese con el administrador del sistema");
+                                    return;
+                                }
+                            }
                         }
                     });
                 }
@@ -87,18 +108,18 @@ if ($sesion->sesion_iniciada() == false) {
             Cambiar Clave
         </div>
         <div class="panel-body" style="background-color: rgba(255,255,255,0.7);">
-            <form id="formulario" class="form-inline" style="text-align: left;width: 400px;margin: 0 auto;">
+            <form id="formulario" class="form-inline" style="text-align: left;max-width: 400px;margin: 0 auto;">
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon" style="width: 160px;">Contraseña Anterior</div>
+                        <div class="input-group-addon" style="width: 100px;">Contraseña Anterior</div>
                         <input type="password" name="clave_anterior" class="form-control" id="clave_anterior" placeholder="Clave Anterior">
                     </div><br><br>
                     <div class="input-group">
-                        <div class="input-group-addon" style="width: 160px;">Contraseña Nueva</div>
+                        <div class="input-group-addon" style="width: 100px;">Contraseña Nueva</div>
                         <input type="password" name="clave_nueva" class="form-control" id="clave_nueva" placeholder="Clave Nueva">
                     </div><br><br>
                     <div class="input-group">
-                        <div class="input-group-addon" style="width: 160px;">Repita Contraseña</div>
+                        <div class="input-group-addon" style="width: 100px;">Repita Contraseña</div>
                         <input type="password" name="clave_nueva_2" class="form-control" id="clave_nueva_2" placeholder="Repita la Nueva Clave">
                     </div>
                 </div>

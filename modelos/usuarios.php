@@ -101,7 +101,7 @@ class Usuario
     }
     function cambiarClave($usuario_id, $clave_anterior, $clave_nueva){
         if (!intval($usuario_id)){
-            return 'usuario invalido';
+            return 'usuario';
         }
         $sql="SELECT clave from usuarios WHERE id=$usuario_id and clave =md5('$clave_anterior')";
         $stm=$this->con->consulta_bd($sql);
@@ -110,7 +110,7 @@ class Usuario
             $sql="UPDATE usuarios SET clave=md5($clave_nueva) WHERE id=$usuario_id";
             $this->con->consulta_bd($sql);
         }else{
-            return 'clave anterior invalida';
+            return 'clave';
         }
         return 1;
 

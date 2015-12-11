@@ -103,9 +103,16 @@ class Usuario
         if (!intval($usuario_id)){
             return 'usuario invalido';
         }
-        $sql="SELECT clave from usuarios WHERE id=$usuario_id";
+        $sql="SELECT clave from usuarios WHERE id=$usuario_id and clave =md5('$clave_anterior')";
         $stm=$this->con->consulta_bd($sql);
         $array=$this->con->obtener_array_consulta($stm, Sql::ARRAY_INDEXADO);
-        $clave=$array[0]["clave"];
+        if (count($array)>0){
+            $sql="UPDATE usuarios SET clave=md5($clave_nueva) WHERE id=$usuario_id";
+            $this->con->consulta_bd($sql);
+        }else{
+            return 'clave anterior invalida';
+        }
+        return 1;
+
     }
 }

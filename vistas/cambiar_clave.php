@@ -71,7 +71,7 @@ if ($sesion->sesion_iniciada() == false) {
                             console.log(resp);
                         },
                         success:function(response){
-
+                            console.log(response);
                         }
                     });
                 }

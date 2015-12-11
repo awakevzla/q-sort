@@ -46,6 +46,6 @@ switch ($band){
         $clave_anterior=$_REQUEST["clave_anterior"];
         $clave_nueva=$_REQUEST["clave_nueva"];
         $usuario_id=$sesion->getId_usuario();
-        echo $usuarios->cambiarClave($usuario_id, $clave_anterior, $clave_nueva);
+        echo json_encode($usuarios->cambiarClave($usuario_id, $clave_anterior, $clave_nueva));
         break;
 }

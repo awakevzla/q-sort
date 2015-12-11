@@ -70,9 +70,7 @@ function atendiendo(est){
             if (response["correlativo"]==undefined){   // SI NO ESTA ATENDIENDO A NADIE
                 $("#ticket").html("---/---");
                 $("#ticket").attr("data-id_atend",0);
-                return;
             }
-            console.log(response);
             $("#ticket").html(response["correlativo"]);
             $("#clEspera").html(response["clEspera"]);
             $("#ticket").attr("data-idatend", parseInt(response["id"]));

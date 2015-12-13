@@ -26,11 +26,7 @@ if ($sesion->sesion_iniciada() == false) {
             height: 100px;
             font-size: 40px;
             text-align: left;
-        }
-        html{
-            background: url("img/guadalupe.jpg");
-            background-size: cover;
-            background-repeat: space;
+            background-image: url("img/guadalupe.jpg")  ;
             background-attachment: fixed;
         }
     </style>
@@ -63,7 +59,7 @@ if ($sesion->sesion_iniciada() == false) {
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Estadísticas <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="menu" href="vistas/ver_colas.php"><i class="fa fa-group"></i> Ver Colas</a></li>
-                                <li><a class="menu" href="vistas/mostrar_estadisticas.php"><i class="fa fa-bar-chart-o"></i> Estadísticas</a></li>
+                                <li><a class="menu" href="vistas/estadisticas.php"><i class="fa fa-bar-chart-o"></i> Estadísticas</a></li>
                             </ul>
                         </li>
                     </ul>

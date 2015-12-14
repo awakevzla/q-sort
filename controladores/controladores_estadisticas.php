@@ -6,4 +6,9 @@ switch ($band) {
     case 'verColas':
         echo json_encode($ticket->getColas());
         break;
+    case 'generarGrafica':
+        $fechaIni=$_REQUEST["fecha_inicio"];
+        $fechaFin=$_REQUEST["fecha_fin"];
+        echo json_encode($ticket->getCantidadPacientes($fechaIni, $fechaFin));
+        break;
 }

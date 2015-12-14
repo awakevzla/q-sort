@@ -1,14 +1,18 @@
 <?php
-/*include_once '../modelos/tickets.php';
-$ticket=new Tickets();
-$estaciones=$ticket->getEstaciones(0);*/
+$fechaInicio=date('Y-m-').'01';
+$fechaFin=date('Y-m-d');
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Estadísticas</title>
+    <link rel="stylesheet" href="../jquery-ui/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="../jquery-ui/jquery-ui.css">
     <script src="../js/jquery.min.js"></script>
+    <script src="../jquery-ui/jquery-ui.js"></script>
+    <script src="../jquery-ui/datepicker-es.js"></script>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
@@ -41,10 +45,12 @@ $estaciones=$ticket->getEstaciones(0);*/
     </style>
     <script>
         var datos;
-        $(document).ready(function () {
+        var fecha_inicio='<?=$fechaInicio;?>';
+        var fecha_fin='<?=$fechaFin;?>';
+        function graficar(fecha_inicio, fecha_fin){
             $.ajax({
-                url     :"../modelos/tickets.php",
-                data    : {fecha_inicio:'2015-12-01',fecha_fin:'2015-12-12'},
+                url     :"../controladores/controladores_estadisticas.php",
+                data    : {fecha_inicio:fecha_inicio,fecha_fin:fecha_fin,band:'generarGrafica'},
                 dataType:"json",
                 type    :"post",
                 beforeSend: function () {
@@ -94,6 +100,24 @@ $estaciones=$ticket->getEstaciones(0);*/
                     });
                 }
             });
+        }
+        $(document).ready(function () {
+            $("#txtFechaInicio").val(fecha_inicio);
+            $("#txtFechaFin").val(fecha_fin);
+            $(".datepicker").datepicker({
+                maxDate:'0'
+            });
+            //graficar(fecha_inicio,fecha_fin);
+            $("#btnConsultar").click(function () {
+                fecha_inicio=$("#txtFechaInicio").val();
+                fecha_fin=$("#txtFechaFin").val();
+                if (fecha_inicio=="" || fecha_fin==""){
+                    alert("Debe seleccionar el intervalo de fechas!");
+                    return;
+                }else{
+                    graficar(fecha_inicio, fecha_fin);
+                }
+            });
         });
     </script>
 </head>
@@ -103,8 +127,16 @@ $estaciones=$ticket->getEstaciones(0);*/
         <div class="panel-heading">Módulo Estadístico</div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-lg-1">
-
+                <div class="col-lg-4">
+                    <label for="txtFechaInicio">Fecha inicio</label>
+                    <input type="text" id="txtFechaInicio" readonly class="form-control datepicker">
+                </div>
+                <div class="col-lg-4">
+                    <label for="txtFechaFin">Fecha fin</label>
+                    <input type="text" id="txtFechaFin" readonly class="form-control datepicker">
+                </div>
+                <div class="col-lg-4"><br>
+                    <a class="btn btn-success" id="btnConsultar">Consultar</a>
                 </div>
             </div>
             <div id="container"></div>

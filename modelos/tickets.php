@@ -313,8 +313,3 @@ class Tickets
         return $aryRange;
     }
 }
-$fecha_inicio=$_REQUEST["fecha_inicio"];
-$fecha_fin=$_REQUEST["fecha_fin"];
-$ticket=new Tickets();
-$datos=$ticket->getCantidadPacientes($fecha_inicio,$fecha_fin);
-echo json_encode($datos);

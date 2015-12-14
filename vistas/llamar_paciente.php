@@ -77,7 +77,7 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
                         ?>
                         <a class="btn btn-primary estaciones trasladar" style="text-align: left;"
                            data-id="<?php echo $v["id"]; ?>"><span
-                                class="glyphicon glyphicon-ok-circle"></span><?php echo $v["nombre"]; ?></a><br><br>
+                                class="glyphicon glyphicon-ok-circle"></span><?php echo utf8_decode($v["nombre"]); ?></a><br><br>
                         <?php
                     }
                     ?>

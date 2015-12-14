@@ -1,3 +1,21 @@
+/*
+Sqls
+
+SELECT
+  estacion_id,
+  TIME_FORMAT(SEC_TO_TIME(AVG(TIME_TO_SEC(timediff(fecha_hora_fin, fecha_hora_inicio)))), '%H:%i:%s') AS diferencia
+FROM cola
+WHERE DATE(fecha_hora_inicio) = CURDATE() AND !isnull(fecha_hora_fin)
+GROUP BY estacion_id;
+
+SELECT count(DISTINCT correlativo) AS cantidad
+FROM cola
+WHERE (DATE(fecha_hora_inicio) BETWEEN '2015-10-01' AND '2015-12-12') AND estacion_id = 1
+GROUP BY date_format(fecha_hora_inicio, '%d-%m-%Y'), estacion_id
+ORDER BY date(fecha_hora_inicio), estacion_id ASC;
+
+ */
+
 -- phpMyAdmin SQL Dump
 -- version 4.2.12deb2
 -- http://www.phpmyadmin.net

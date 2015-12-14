@@ -64,6 +64,9 @@ class Tickets
         $this->con->abrir_conexion();
         $stm = $this->con->consulta_bd($sql);
         $arrayEstaciones = $this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
+        foreach ($arrayEstaciones as $k=>$v){
+            $arrayEstaciones[$k]["nombre"]=utf8_decode($v["nombre"]);
+        }
         $this->con->cerrar_conexion();
         return $arrayEstaciones;
     }
@@ -101,7 +104,7 @@ class Tickets
             id
         FROM cola
         WHERE date_format(fecha_hora_inicio, '%d-%m-%Y') = date_format(CURDATE(), '%d-%m-%Y') and estacion_id=$est and estado_id=1
-        ORDER BY correlativo ASC
+        ORDER BY id ASC
         LIMIT 1;";
         $this->con->abrir_conexion();
         $stm = $this->con->consulta_bd($sql);
@@ -283,7 +286,7 @@ class Tickets
         $sql="SELECT
           count(DISTINCT correlativo) as cantidad
         FROM cola
-          WHERE DATE(fecha_hora_inicio) = '$fecha' and estacion_id=$estacion;";
+          WHERE DATE(fecha_hora_inicio) = '$fecha' and estacion_id=$estacion and estado_id=2;";
         $stm=$conex->consulta_bd($sql);
         $array=$conex->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
         $cantidad=$array[0]["cantidad"];

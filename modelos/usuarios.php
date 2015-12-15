@@ -46,7 +46,9 @@ class Usuario
     function getEstaciones(){
         $sql="SELECT
           id,
-          nombre
+          nombre,
+          prefijo,
+          descripcion
         FROM estaciones;";
         $stm=$this->con->consulta_bd($sql);
         $array=$this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);

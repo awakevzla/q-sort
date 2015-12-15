@@ -28,4 +28,21 @@ switch ($band) {
         $estacion_origen=$_REQUEST["estacion_origen"];
         echo $ticket->trasladarPaciente($estacion_origen, $estacion_destino);
         break;
+    case 'registrarEstacion':
+        $nombre=$_REQUEST["nombre"];
+        $descripcion=$_REQUEST["descripcion"];
+        $prefijo=$_REQUEST["prefijo"];
+        echo $ticket->registrarEstacion($nombre, $descripcion, $prefijo);
+        break;
+    case 'modificarEstacion':
+        $nombre=$_REQUEST["nombre"];
+        $descripcion=$_REQUEST["descripcion"];
+        $prefijo=$_REQUEST["prefijo"];
+        $id=$_REQUEST["id"];
+        echo $ticket->modificarEstacion($id, $nombre, $descripcion, $prefijo);
+        break;
+    case 'eliminarEstacion':
+        $id=intval($_REQUEST["id"]);
+        echo $ticket->eliminarEstacion($id);
+        break;
 }

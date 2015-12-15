@@ -79,7 +79,7 @@ $estaciones=$User->getEstaciones();
                                     <option value="0">Seleccione...</option>
                                     <?php
                                     foreach ($estaciones as $k=>$v) {
-                                        echo "<option value='".$v["id"]."'>".$v["nombre"]."</option>";
+                                        echo "<option value='".$v["id"]."'>".utf8_decode($v["nombre"])."</option>";
                                     }
                                     ?>
                                 </select>
@@ -126,7 +126,7 @@ $estaciones=$User->getEstaciones();
                             echo "<td>".$v["login"]."</td>";
                             echo "<td>".$v["nombre_completo"]."</td>";
                             echo "<td>".$v["tipo"]."</td>";
-                            echo "<td>".$v["estacion"]."</td>";
+                            echo "<td>".utf8_decode($v["estacion"])."</td>";
                             echo "<td>".$v["baneado"]."</td>";
                             echo "<td style='width: 180px;'>
                                 <a class='btn btn-danger eliminar' data-toggle='tooltip' data-placement='top' data-id=".$v["id"]." title='Eliminar'><span class='glyphicon glyphicon-remove'></span></a>

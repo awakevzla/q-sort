@@ -293,7 +293,7 @@ $(document).ready(function () {
         $("html, body").animate({ scrollTop: 0 }, "slow");
     });
     $(document).on("click", "#btnCancelar", function () {
-        $("#modificar").spassword_2lideUp();
+        $("#modificar").slideUp();
         $("#registrar").slideDown();
         limpiarFormulario();
     });

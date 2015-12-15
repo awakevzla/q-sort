@@ -50,7 +50,7 @@ $estaciones=$ticket->getEstaciones(0);
                     <?php
                     foreach($estaciones as $k=>$v){
                         ?>
-                        <a class="btn btn-primary estaciones" data-estid="<?php echo $v["id"]; ?>" data-pref="<?php echo $v["prefijo"]; ?>" data-nombre="<?php echo $v["nombre"]; ?>" id="aps"><span class="glyphicon glyphicon-ok-circle"></span> <?php echo $v["nombre"]; ?></a><br><br>
+                        <a class="btn btn-primary estaciones" data-estid="<?php echo $v["id"]; ?>" data-pref="<?php echo $v["prefijo"]; ?>" data-nombre="<?php echo utf8_decode($v["nombre"]); ?>" id="aps"><span class="glyphicon glyphicon-ok-circle"></span> <?php echo utf8_decode($v["nombre"]); ?></a><br><br>
                         <?php
                     }
                     ?>

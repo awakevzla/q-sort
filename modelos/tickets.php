@@ -315,4 +315,25 @@ class Tickets
         }
         return $aryRange;
     }
+
+    function registrarEstacion($nombre, $descripcion, $prefijo){
+        $sql="INSERT INTO estaciones (nombre, descripcion, prefijo) VALUES ('$nombre', '$descripcion', '$prefijo')";
+        $this->con->abrir_conexion();
+        $this->con->consulta_bd($sql);
+        return 1;
+    }
+
+    function modificarEstacion($id, $nombre, $descripcion, $prefijo){
+        $sql="UPDATE estaciones SET nombre='$nombre', descripcion='$descripcion', prefijo='$prefijo' WHERE id=$id";
+        $this->con->abrir_conexion();
+        $this->con->consulta_bd($sql);
+        return 1;
+    }
+
+    function eliminarEstacion($id){
+        $this->con->abrir_conexion();
+        $sql="delete from estaciones where id=$id";
+        $this->con->consulta_bd($sql);
+        return 1;
+    }
 }

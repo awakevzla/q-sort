@@ -55,6 +55,7 @@ if ($sesion->sesion_iniciada() == false) {
                     <ul class="nav navbar-nav">
                         <li><a class="menu" href="vistas/generar_ticket.php">Generar Ticket</a></li>
                         <li><a class="menu" href="vistas/llamar_paciente.php">Atender Pacientes</a></li>
+                        <li><a class="menu" href="vistas/estaciones.php">Administrar estaciones</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Estadísticas <span class="caret"></span></a>
                             <ul class="dropdown-menu">

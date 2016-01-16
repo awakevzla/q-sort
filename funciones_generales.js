@@ -21,13 +21,39 @@ $(document).ready(function () {
         $("#contOpcion").slideDown();
     });
     $("#cerrar").click(function () {
-
+        if (!confirm("¿Está seguro de cerrar éste ticket?")){
+            return;
+        }
+        cerrarTicket(est);
     });
     $(".trasladar").click(function () {
         id=$(this).data("id");
         trasladarPaciente(est, id);
     });
 });
+
+function cerrarTicket(estacion_id){
+    $.ajax({
+        url     :"../controladores/controladores_generar_ticket.php",
+        data    : {estacion_id:estacion_id,band:"cerrarTicket"},
+        dataType:"text",
+        type    :"post",
+        error   : function(resp){
+            alert("!Ha ocurrido un error!");
+            console.log(resp);
+        },
+        success:function(response){
+            console.log(response);
+            if (response=="1"){
+                alert("Cerrado Exitósamente!");
+            }else{
+                alert("Ocurrió un inconveniente al cerrar ticket, intente nuevamente o comuníquese con el administrador");
+                location.reload();
+            }
+            atendiendo(est);
+        }
+    });
+}
 
 function trasladarPaciente(est, id){
     $.ajax({

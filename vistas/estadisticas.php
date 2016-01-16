@@ -16,8 +16,8 @@ $fechaFin=date('Y-m-d');
     <!-- Bootstrap -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="../js/highcharts.js"></script>
+    <script src="../js/exporting.js"></script>
     <link rel="stylesheet" href="../css/vistas.css">
     <script src="../js/bootstrap.min.js"></script>
     <style>
@@ -64,7 +64,21 @@ $fechaFin=date('Y-m-d');
                 success:function(response){
                     $("*").css("cursor", "default");
                     console.log(response);
+                    dias=response.fechas.length;
+                    $("#dias").html(dias);
                     datos=response["datos"];
+                    strHTML="";
+                    $.each(datos, function (k, v) {
+                        strHTML+="<tr>";
+                        strHTML+="<td>"+v.name+"</td>";
+                        cant=0;
+                        $.each(v.data, function (l, m) {
+                             cant=cant+parseInt(m);
+                        });
+                        strHTML+="<td>"+cant+"</td>";
+                        strHTML+="</tr>";
+                    });
+                    $("#tabResumen tbody").html(strHTML);
                     $('#container').highcharts({
                         title: {
                             text: 'Pacientes en Rango de Tiempo',
@@ -91,13 +105,17 @@ $fechaFin=date('Y-m-d');
                             valueSuffix: ' Pacientes'
                         },
                         legend: {
-                            layout: 'vertical',
-                            align: 'right',
-                            verticalAlign: 'middle',
+                            layout: 'horizontal',
+                            align: 'middle',
+                            verticalAlign: 'top',
                             borderWidth: 0
                         },
-                        series: datos
+                        series: datos,
+                        credits:{
+                            enabled:false
+                        }
                     });
+                    $("#contTabResumen").slideDown();
                 }
             });
         }
@@ -136,8 +154,19 @@ $fechaFin=date('Y-m-d');
                     <input type="text" id="txtFechaFin" readonly class="form-control datepicker">
                 </div>
                 <div class="col-lg-4"><br>
-                    <a class="btn btn-success" id="btnConsultar">Consultar</a>
+                    <a class="btn btn-success" id="btnConsultar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Consultar</a>
                 </div>
+            </div>
+            <div id="contTabResumen" style="display: none;">
+            <table id="tabResumen" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Estación</th>
+                        <th>Pacientes Atendidos en <span id="dias"></span> dia(s)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
             </div>
             <div id="container"></div>
         </div>

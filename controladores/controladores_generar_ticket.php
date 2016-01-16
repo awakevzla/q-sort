@@ -17,8 +17,8 @@ switch ($band) {
     case 'llamarPaciente':
         $est = $_REQUEST["est"];
         $id_atend = $ticket->getAtendiendo($est);
-        if (isset($id_atend["id"])) {// Si esta atendiendo a un paciente -> cambia el estatus a despachado
-            $result = $ticket->generasql("cola", "estado_id", 3, true, true, "where id=" . $id_atend["id"], true);
+        if (isset($id_atend["id"])) {
+            $result = $ticket->cerrarTicket($id_atend["id"]);
         }
         $result = $ticket->getSigPaciente($est);
         echo json_encode($result);
@@ -44,5 +44,9 @@ switch ($band) {
     case 'eliminarEstacion':
         $id=intval($_REQUEST["id"]);
         echo $ticket->eliminarEstacion($id);
+        break;
+    case 'cerrarTicket':
+        $estacion_id=intval($_REQUEST["estacion_id"]);
+        echo $ticket->cerrarTicketAtendiendo($estacion_id);
         break;
 }

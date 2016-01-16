@@ -54,7 +54,7 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
     <div class="panel panel-primary">
         <div class="panel-heading">
             ADMINISTRACIÓN DE COLAS <span
-                style="float: right;text-decoration: underline;"><strong>Estación: <?php echo $estacionPertenece[0]["nombre"] . "/" . utf8_decode($estacionPertenece[0]["descripcion"]); ?></strong></span>
+                style="float: right;text-decoration: underline;"><strong>Estación: <?php echo utf8_decode($estacionPertenece[0]["nombre"]) . "/" . utf8_decode($estacionPertenece[0]["descripcion"]); ?></strong></span>
         </div>
         <div class="panel-body">
             <div class="row" style="text-align: center;" id="contOpcion">
@@ -91,7 +91,7 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading" style="text-align: center;"><p>ATENDIENDO / ESTACIÓN: <b><?php echo strtoupper($estacionPertenece[0]["nombre"])?></b></p></div>
+                        <div class="panel-heading" style="text-align: center;"><p>ATENDIENDO / ESTACIÓN: <b><?php echo strtoupper(utf8_decode($estacionPertenece[0]["nombre"]))?></b></p></div>
                         <div class="panel-body">
                             <label class="form-control" style="height: auto;">Ticket: <span id="ticket"> ---/--- </span></label>
                             <label class="form-control" style="height: auto;">Clientes en espera: <span

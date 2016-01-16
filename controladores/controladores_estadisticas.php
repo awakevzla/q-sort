@@ -11,4 +11,8 @@ switch ($band) {
         $fechaFin=$_REQUEST["fecha_fin"];
         echo json_encode($ticket->getCantidadPacientes($fechaIni, $fechaFin));
         break;
+    case 'getPromedioTiempo':
+        $fecha=$_REQUEST["fecha"];
+        echo json_encode($ticket->getTiempoPromedio($fecha));
+        break;
 }

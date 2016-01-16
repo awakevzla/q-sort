@@ -1,3 +1,5 @@
+var _colas={};
+var _estaciones={};
 function cargarColas(){
     $.ajax({
         url     :"../controladores/controladores_estadisticas.php",
@@ -10,13 +12,13 @@ function cargarColas(){
         },
         success:function(response){
             estaciones=response["estaciones"];
+            _estaciones=estaciones;
             colas=response["porEstacion"];
+            _colas=colas;
             strHTML="";
             bandAtend=0;
             bandCola=0;
-            console.log(estaciones);
             $.each(estaciones, function (k, v) {
-                console.log(v);
                 strHTML+="<tr>";
                 strHTML+="<td>"+v["nombre"]+"</td>";
                 if (colas[v["id"]]!=undefined){
@@ -40,7 +42,6 @@ function cargarColas(){
                     }else{
                     }
                     if (bandCola<4){
-                        console.log(bandCola);
                         for(i=0;i<4-bandCola;i++){
                             strHTML+="<td>--/---</td>";
                         }
@@ -52,7 +53,7 @@ function cargarColas(){
                     strHTML+="<td>--/---</td>";
                     strHTML+="<td>--/---</td>";
                 }
-                strHTML+="<td><a class='btn btn-info' data-estacion='"+v["id"]+"'>Ver Mas</a></td>";
+                strHTML+="<td><a class='btn btn-info ver_mas' data-estacion='"+v["id"]+"'>Ver Mas</a></td>";
                 strHTML+="</tr>";
                 bandCola=0;
                 bandAtend=0;
@@ -61,6 +62,23 @@ function cargarColas(){
         }
     });
 }
+
+function ver_cola(estacion_id){
+    strHTML="";
+    band=0;
+    $.each(_colas[estacion_id][1], function (k, v) {
+        (band==0)?$("#nombre_estacion").html(v["estacion"]):band=1;
+        band=1;
+        strHTML+='<li class="list-group-item">'+v["ticket"]+'</li>';
+    });
+    $("#lista").html(strHTML);
+    $("#colas").modal();
+}
+
 $(document).ready(function () {
     cargarColas();
+    $(document).on("click", ".ver_mas", function () {
+        estacion=$(this).data("estacion");
+        ver_cola(estacion);
+    });
 });

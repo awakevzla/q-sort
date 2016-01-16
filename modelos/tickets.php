@@ -234,7 +234,7 @@ class Tickets
             $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estacion_id"] = $v["estacion_id"];
             $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["ticket"] = $v["ticket"];
             $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estado"] = $v["estados"];
-            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estacion"] = $v["estacion"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estacion"] = utf8_decode($v["estacion"]);
             $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["cola_id"] = $v["cola_id"];
         }
         $Result["porEstacion"] = $arrayR;

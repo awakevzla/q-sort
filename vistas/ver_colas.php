@@ -38,18 +38,36 @@ $arrayColas=$modulo->getColas();
         </div>
         <div class="panel-body">
             <div style="background-color: rgba(255,255,255,0.7);">
-            <table id="tabColas" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Estación</th>
-                        <th>Atención</th>
-                        <th colspan="4" style="text-align: center;">En Espera</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+                <table id="tabColas" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Estación</th>
+                            <th>Atención</th>
+                            <th colspan="4" style="text-align: center;">En Espera</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="modal fade" role="dialog" id="colas">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3>Cola de la estación <span id="nombre_estacion"></span></h3>
+                            </div>
+                            <div class="modal-body" style="overflow-y: scroll;height: 40vh;">
+                                <ul class="list-group" id="lista">
+
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
             </div>
         </div>
     </div>

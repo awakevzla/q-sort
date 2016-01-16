@@ -56,6 +56,9 @@ function cerrarTicket(estacion_id){
 }
 
 function trasladarPaciente(est, id){
+    if (!confirm("¿Está seguro de trasladar a éste paciente?")){
+        return;
+    }
     $.ajax({
         url     :"../controladores/controladores_generar_ticket.php",
         data    : {estacion_destino:id,estacion_origen:est,band:"trasladarPaciente"},

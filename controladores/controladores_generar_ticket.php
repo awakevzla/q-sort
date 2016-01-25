@@ -6,7 +6,8 @@ switch ($band) {
     case 'generar':
         $pref = $_REQUEST["pref"];
         $estid = $_REQUEST["estid"];
-        $result["respuesta"] = $ticket->generarTicket($pref, $estid);
+        $vip=$_REQUEST["vip"];
+        $result["respuesta"] = $ticket->generarTicket($pref, $estid, $vip);
         echo json_encode($result);
         break;
     case 'atendiendo':

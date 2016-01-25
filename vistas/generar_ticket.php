@@ -1,5 +1,8 @@
 <?php
 include_once '../modelos/tickets.php';
+include_once '../clases/Sesion.php';
+$sesion=new Sesion();
+$tipo=$sesion->getTipo_usuario();
 $ticket=new Tickets();
 $estaciones=$ticket->getEstaciones(0);
 ?>
@@ -13,7 +16,9 @@ $estaciones=$ticket->getEstaciones(0);
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../css/vistas.css">
+    <link rel="stylesheet" href="../css/bootstrap.switch.css">
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.switch.js"></script>
     <script src="../js/generar_ticket.js?r=<?=date('d-m-Y H:i:s')?>"></script>
     <style>
         .estaciones{
@@ -47,7 +52,12 @@ $estaciones=$ticket->getEstaciones(0);
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6" style="text-align: center;">
-                    <?php
+                    <?php if ($tipo==1){
+                        ?>
+                        <label for="vip">Especiales</label>
+                        <input type="checkbox" data-on-text="SI" data-off-text="NO" name="my-checkbox" id="vip"><br><br>
+                        <?php
+                    }
                     foreach($estaciones as $k=>$v){
                         ?>
                         <a class="btn btn-primary estaciones" data-estid="<?php echo $v["id"]; ?>" data-pref="<?php echo $v["prefijo"]; ?>" data-nombre="<?php echo utf8_decode($v["nombre"]); ?>" id="aps"><span class="glyphicon glyphicon-ok-circle"></span> <?php echo utf8_decode($v["nombre"]); ?></a><br><br>

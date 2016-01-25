@@ -13,7 +13,7 @@ class Tickets
         $this->creada = false;
     }
 
-    function generarTicket($pref, $estid)
+    function generarTicket($pref, $estid, $vip)
     {
         $correlativo = "001";
         $sql = "SELECT
@@ -27,12 +27,12 @@ class Tickets
         $stm = $this->con->consulta_bd($sql);
         $ticket = $this->con->obtener_fila_consulta($stm, Sql::ARRAY_ASOCIATIVO);
         if ($ticket["correlativo"] == "") {
-            $sql = "INSERT INTO cola (correlativo, ticket, estacion_id, estado_id) VALUES ('001', '" . strtoupper($pref) . "-" . $correlativo . "', $estid, 1);";
+            $sql = "INSERT INTO cola (correlativo, ticket, estacion_id, estado_id, vip) VALUES ('001', '" . strtoupper($pref) . "-" . $correlativo . "', $estid, 1, $vip);";
             $this->con->consulta_bd($sql);
         } else {
             $correlativo = intval($ticket["correlativo"]) + 1;
             $correlativo = str_pad($correlativo, 3, '0', STR_PAD_LEFT);
-            $sql = "INSERT INTO cola (correlativo, ticket, estacion_id, estado_id) VALUES ('$correlativo', '" . strtoupper($pref) . "-" . $correlativo . "', $estid, 1);";
+            $sql = "INSERT INTO cola (correlativo, ticket, estacion_id, estado_id, vip) VALUES ('$correlativo', '" . strtoupper($pref) . "-" . $correlativo . "', $estid, 1, $vip);";
             $this->con->consulta_bd($sql);
         }
         $sql = "SELECT
@@ -104,7 +104,7 @@ class Tickets
             id
         FROM cola
         WHERE date_format(fecha_hora_inicio, '%d-%m-%Y') = date_format(CURDATE(), '%d-%m-%Y') and estacion_id=$est and estado_id=1
-        ORDER BY id ASC
+        ORDER BY vip DESC, id ASC
         LIMIT 1;";
         $this->con->abrir_conexion();
         $stm = $this->con->consulta_bd($sql);
@@ -220,22 +220,24 @@ class Tickets
           est.id         AS estacion_id,
           ticket,
           estado_id,
-          estados.nombre AS estados
+          estados.nombre AS estados,
+          cola.vip
         FROM cola
           JOIN estaciones est ON est.id = cola.estacion_id
           JOIN estados ON estados.id = cola.estado_id
-        WHERE date(cola.fecha_hora_inicio) = CURDATE();";
+        WHERE date(cola.fecha_hora_inicio) = CURDATE() ORDER BY vip DESC, cola.id ASC;";
         $stm = $conex->consulta_bd($sql);
         $Result = array();
         $arrayR = array();
         $arrayColas = $conex->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
         foreach ($arrayColas as $k => $v) {
-            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estado_id"] = $v["estado_id"];
-            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estacion_id"] = $v["estacion_id"];
-            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["ticket"] = $v["ticket"];
-            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estado"] = $v["estados"];
-            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["estacion"] = utf8_decode($v["estacion"]);
-            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["cola_id"]]["cola_id"] = $v["cola_id"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["vip"]][$v["cola_id"]]["estado_id"] = $v["estado_id"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["vip"]][$v["cola_id"]]["estacion_id"] = $v["estacion_id"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["vip"]][$v["cola_id"]]["vip"] = $v["vip"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["vip"]][$v["cola_id"]]["ticket"] = $v["ticket"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["vip"]][$v["cola_id"]]["estado"] = $v["estados"];
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["vip"]][$v["cola_id"]]["estacion"] = utf8_decode($v["estacion"]);
+            $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["vip"]][$v["cola_id"]]["cola_id"] = $v["cola_id"];
         }
         $Result["porEstacion"] = $arrayR;
         $Result["estaciones"] = $this->getTodasEstaciones();

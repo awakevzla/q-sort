@@ -11,6 +11,7 @@ function cargarColas(){
             console.log(resp);
         },
         success:function(response){
+            console.log(response);
             estaciones=response["estaciones"];
             _estaciones=estaciones;
             colas=response["porEstacion"];
@@ -23,17 +24,32 @@ function cargarColas(){
                 strHTML+="<td>"+v["nombre"]+"</td>";
                 if (colas[v["id"]]!=undefined){
                     if (colas[v["id"]][2]!=undefined) {
-                        $.each(colas[v["id"]][2], function (l, m) {
-                            /*if (bandAtend==0){*/
-                            strHTML += "<td>" + m["ticket"] + "</td>";
-                            /*}
-                             bandAtend=1;*/
-                        });
+                        if (colas[v["id"]][2][0]!=undefined){
+                            $.each(colas[v["id"]][2][0], function (l, m) {
+                                /*if (bandAtend==0){*/
+                                strHTML += "<td>" + m["ticket"] + "</td>";
+                                /*}
+                                 bandAtend=1;*/
+                            });
+                        }else{
+                            $.each(colas[v["id"]][2][1], function (l, m) {
+                                /*if (bandAtend==0){*/
+                                strHTML += "<td>" + m["ticket"] + "</td>";
+                                /*}
+                                 bandAtend=1;*/
+                            });
+                        }
                     }else{
                         strHTML+="<td>--/---</td>";
                     }
                     if (colas[v["id"]][1]!=undefined){
-                        $.each(colas[v["id"]][1], function (l, m) {
+                        if (colas[v["id"]][1][1]!=undefined){
+                            $.each(colas[v["id"]][1][1], function (l, m) {
+                                strHTML += "<td>" + m["ticket"] + "</td>";
+                            });
+                            bandCola++;
+                        }
+                        $.each(colas[v["id"]][1][0], function (l, m) {
                             if (bandCola<4){
                                 strHTML+="<td>"+m["ticket"]+"</td>";
                             }

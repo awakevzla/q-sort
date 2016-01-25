@@ -4,6 +4,7 @@ $sesion = new Sesion();
 if ($sesion->sesion_iniciada() == false) {
     header('location:login.php');
 }
+$usuario=$sesion->getNombre_usuario()." ".$sesion->getApellido_usuario();
 ?>
 <!DOCTYPE html>
 <html>
@@ -69,6 +70,7 @@ if ($sesion->sesion_iniciada() == false) {
                 }
                 ?>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a class="menu">Bienvenido <?php echo $usuario; ?></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Cuenta <span

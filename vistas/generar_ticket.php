@@ -2,6 +2,9 @@
 include_once '../modelos/tickets.php';
 include_once '../clases/Sesion.php';
 $sesion=new Sesion();
+if ($sesion->sesion_iniciada()==false){
+    header('location:../login.php');
+}
 $tipo=$sesion->getTipo_usuario();
 $vip=$sesion->getVip();
 $ticket=new Tickets();

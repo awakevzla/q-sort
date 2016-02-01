@@ -12,6 +12,7 @@ class Sesion
     public $apellido_usuario = NULL;
     public $tipo_usuario = NULL;
     public $id_sistema = NULL;
+    public $vip = NULL;
 
     function __construct()
     {
@@ -24,6 +25,7 @@ class Sesion
             $this->setNombre_usuario($_SESSION["nombre_usuario"]);
             $this->setApellido_usuario($_SESSION["apellido_usuario"]);
             $this->setTipo_usuario($_SESSION["tipo_usuario"]);
+            $this->setVip($_SESSION["vip"]);
             $this->setEstacion_pertenece($_SESSION["estacion_pertenece"]);
         }
         $this->con = new Sql();
@@ -53,6 +55,7 @@ class Sesion
             $this->setNombre_usuario($datos[0]["nombre"]);
             $this->setId_usuario($datos[0]["id"]);
             $this->setTipo_usuario($datos[0]["tipo_id"]);
+            $this->setVip($datos[0]["vip"]);
             $this->setEstacion_pertenece($datos[0]["estacion_id"]);
             $resp["resp"]=1;
             $sql="update usuarios set intentos = 0 WHERE login=lower('".$usuario[0]["login"]."')";
@@ -158,6 +161,17 @@ class Sesion
     public function getEstacion_pertenece()
     {
         return $this->estacionPertenece;
+    }
+
+    public function getVip()
+    {
+        return $this->vip;
+    }
+
+    public function setVip($vip)
+    {
+        $_SESSION["vip"] = $vip;
+        $this->vip = $vip;
     }
 
     public function setEstacion_pertenece($estacion_pertenece)

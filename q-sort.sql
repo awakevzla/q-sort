@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-01-2016 a las 15:39:29
+-- Tiempo de generación: 01-02-2016 a las 09:06:00
 -- Versión del servidor: 5.5.44-0+deb8u1
--- Versión de PHP: 5.6.13-0+deb8u1
+-- Versión de PHP: 5.6.7-1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -31,24 +31,30 @@ CREATE TABLE IF NOT EXISTS `cola` (
   `correlativo` varchar(3) COLLATE utf8_spanish2_ci NOT NULL,
   `ticket` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
   `fecha_hora_inicio` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `fecha_hora_atencion` timestamp NULL DEFAULT NULL,
+  `fecha_hora_atencion` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `fecha_hora_fin` timestamp NULL DEFAULT NULL,
   `estacion_id` int(11) NOT NULL,
   `estado_id` int(11) NOT NULL,
   `vip` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `cola`
 --
 
 INSERT INTO `cola` (`id`, `correlativo`, `ticket`, `fecha_hora_inicio`, `fecha_hora_atencion`, `fecha_hora_fin`, `estacion_id`, `estado_id`, `vip`) VALUES
-(1, '001', 'LAB-001', '2016-01-26 20:08:27', NULL, NULL, 1, 1, 0),
-(2, '002', 'LAB-002', '2016-01-26 20:08:35', NULL, NULL, 1, 1, 0),
-(3, '003', 'LAB-003', '2016-01-26 20:08:41', NULL, NULL, 1, 1, 1),
-(4, '004', 'APS-004', '2016-01-26 20:08:55', NULL, NULL, 2, 1, 0),
-(5, '005', 'APS-005', '2016-01-26 20:08:55', NULL, NULL, 2, 1, 0),
-(6, '006', 'APS-006', '2016-01-26 20:08:57', '2016-01-26 20:09:07', NULL, 2, 2, 1);
+(1, '001', 'LAB-001', '2016-01-25 21:08:53', '2016-01-25 21:10:05', '2016-01-25 21:14:00', 1, 3, 0),
+(2, '002', 'LAB-002', '2016-01-25 21:08:54', '2016-01-25 21:22:54', '2016-01-25 21:23:02', 1, 3, 0),
+(3, '003', 'LAB-003', '2016-01-25 21:08:55', '2016-01-25 21:23:02', '2016-01-25 21:23:07', 1, 3, 0),
+(4, '004', 'APS-004', '2016-01-25 21:08:55', '2016-01-25 21:23:31', '2016-01-25 21:23:39', 2, 3, 0),
+(5, '005', 'APS-005', '2016-01-25 21:08:55', '2016-01-25 21:23:41', '2016-01-25 21:23:51', 2, 3, 0),
+(6, '006', 'IMG-006', '2016-01-25 21:08:56', '2016-01-25 21:22:12', '2016-01-25 21:22:26', 3, 3, 0),
+(7, '007', 'IMG-007', '2016-01-25 21:08:56', '2016-01-25 21:22:26', '2016-01-25 21:22:34', 3, 3, 0),
+(8, '008', 'IMG-008', '2016-01-25 21:08:56', '2016-01-25 21:22:34', '2016-01-25 21:22:42', 3, 3, 0),
+(9, '009', 'LAB-009', '2016-01-25 21:09:07', '2016-01-25 21:14:00', '2016-01-25 21:22:54', 1, 3, 1),
+(10, '010', 'APS-010', '2016-01-25 21:16:13', '2016-01-25 21:16:26', '2016-01-25 21:23:31', 2, 3, 1),
+(11, '011', 'IMG-011', '2016-01-25 21:24:50', '2016-01-25 21:25:12', '2016-01-25 21:25:56', 3, 3, 0),
+(12, '012', 'IMG-012', '2016-01-25 21:24:51', '2016-01-25 21:25:56', '2016-01-25 21:26:32', 3, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -71,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `estaciones` (
 INSERT INTO `estaciones` (`id`, `nombre`, `descripcion`, `prefijo`, `activo`) VALUES
 (1, 'Laboratorio', 'Estación donde se realizan exámenes de sangre', 'LAB', 1),
 (2, 'APS', 'Atención Primaria de Salud', 'APS', 1),
-(3, 'Imagenología', 'Estación para realizar exámenes de rayos x y otros.', 'IMG', 1);
+(3, 'Imagenologia', 'Estación para realizar exámenes de rayos x y otros.', 'IMG', 1);
 
 -- --------------------------------------------------------
 
@@ -151,17 +157,18 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `tipo_id` int(11) NOT NULL,
   `estacion_id` int(11) DEFAULT NULL,
   `intentos` int(11) NOT NULL DEFAULT '0',
-  `baneado` tinyint(1) NOT NULL DEFAULT '0'
+  `baneado` tinyint(1) NOT NULL DEFAULT '0',
+  `vip` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `login`, `clave`, `nombre`, `apellido`, `tipo_id`, `estacion_id`, `intentos`, `baneado`) VALUES
-(1, 'plugo', 'e10adc3949ba59abbe56e057f20f883e', 'Pedro', 'Lugo', 1, 2, 0, 0),
-(2, 'efrain', 'e10adc3949ba59abbe56e057f20f883e', 'Efrain', 'Rodriguez', 1, 1, 0, 0),
-(3, 'usuario', 'e10adc3949ba59abbe56e057f20f883e', 'Usuario', 'Usuario', 1, 3, 0, 0);
+INSERT INTO `usuarios` (`id`, `login`, `clave`, `nombre`, `apellido`, `tipo_id`, `estacion_id`, `intentos`, `baneado`, `vip`) VALUES
+(1, 'plugo', 'e10adc3949ba59abbe56e057f20f883e', 'Pedro', 'Lugo', 1, 2, 0, 0, 1),
+(2, 'efrain', 'e10adc3949ba59abbe56e057f20f883e', 'Efrain', 'Rodriguez', 1, 1, 0, 0, 1),
+(3, 'usuario', 'e10adc3949ba59abbe56e057f20f883e', 'usuario', 'usuario', 2, 3, 0, 0, 0);
 
 --
 -- Índices para tablas volcadas
@@ -201,7 +208,7 @@ ALTER TABLE `users`
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `login` (`login`), ADD UNIQUE KEY `uniq_login` (`login`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `login` (`login`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -211,7 +218,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cola`
 --
 ALTER TABLE `cola`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `estaciones`
 --

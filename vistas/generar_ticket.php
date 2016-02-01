@@ -3,6 +3,7 @@ include_once '../modelos/tickets.php';
 include_once '../clases/Sesion.php';
 $sesion=new Sesion();
 $tipo=$sesion->getTipo_usuario();
+$vip=$sesion->getVip();
 $ticket=new Tickets();
 $estaciones=$ticket->getEstaciones(0);
 ?>
@@ -52,7 +53,7 @@ $estaciones=$ticket->getEstaciones(0);
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6" style="text-align: center;">
-                    <?php if ($tipo==1){
+                    <?php if ($vip==1){
                         ?>
                         <label for="vip">Especiales</label>
                         <input type="checkbox" data-on-text="SI" data-off-text="NO" name="my-checkbox" id="vip"><br><br>

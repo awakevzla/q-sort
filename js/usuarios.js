@@ -1,4 +1,4 @@
-function registrarUsuario(login, nombres, apellidos, tipo, clave_1, clave_2, estacion){
+function registrarUsuario(login, nombres, apellidos, tipo, clave_1, clave_2, estacion, vip){
     if (clave_1==""){
         alert("Debe ingresar una clave!");
         $("#password").focus();
@@ -35,7 +35,7 @@ function registrarUsuario(login, nombres, apellidos, tipo, clave_1, clave_2, est
 
     $.ajax({
         url     :"../controladores/controladores_usuarios.php",
-        data    : {band:"registrarUsuario", login:login, nombres:nombres, apellidos:apellidos, tipo:tipo, clave:clave_1, estacion:estacion},
+        data    : {band:"registrarUsuario", login:login, nombres:nombres, apellidos:apellidos, tipo:tipo, clave:clave_1, estacion:estacion, vip:vip},
         dataType:"text",
         type    :"post",
         error   : function(resp){
@@ -56,6 +56,7 @@ function registrarUsuario(login, nombres, apellidos, tipo, clave_1, clave_2, est
 function limpiarFormulario(){
     $("input[type = text]").val("");
     $("input[type = password]").val("");
+    $("#vip").bootstrapSwitch('state', false);
     $("select").val("0");
     $("#txtLogin").focus();
     getUsuarios();
@@ -81,15 +82,17 @@ function dibujarTabla(tabla, datos){
     $("#"+tabla).dataTable().fnDestroy();
     strHTML="";
     $.each(datos, function (k, v) {
+        vip = (v["vip"]==1)?'Si':"No";
         strHTML+="<tr>";
         strHTML+="<td>"+v["login"]+"</td>";
         strHTML+="<td>"+v["nombre_completo"]+"</td>";
         strHTML+="<td>"+v["tipo"]+"</td>";
         strHTML+="<td>"+v["estacion"]+"</td>";
         strHTML+="<td>"+v["baneado"]+"</td>";
+        strHTML+="<td>"+vip+"</td>";
         strHTML+="<td>";
             strHTML+="<a class='btn btn-danger eliminar' data-toggle='tooltip' data-placement='top' data-id="+v["id"]+" title='Eliminar'><span class='glyphicon glyphicon-remove'></span></a>";
-            strHTML+="<a class='btn btn-warning modificar' data-toggle='tooltip' data-nombre='"+v["nombre"]+"' data-estacion='"+v["estacion_id"]+"' data-apellido='"+v["apellido"]+"' data-login='"+v["login"]+"' data-tipo='"+v["tipo_id"]+"' data-id="+v["id"]+" data-placement='top' title='Modificar'><span class='glyphicon glyphicon-edit'></span></a>";
+            strHTML+="<a class='btn btn-warning modificar' data-toggle='tooltip' data-nombre='"+v["nombre"]+"' data-estacion='"+v["estacion_id"]+"' data-apellido='"+v["apellido"]+"' data-vip='"+v["vip"]+"' data-login='"+v["login"]+"' data-tipo='"+v["tipo_id"]+"' data-id="+v["id"]+" data-placement='top' title='Modificar'><span class='glyphicon glyphicon-edit'></span></a>";
             strHTML+="<a class='btn btn-default bloquear' data-toggle='tooltip' data-id="+v["id"]+" data-placement='top' title='Bloquear'><i class='fa fa-lock'></i></a>";
             strHTML+="<a class='btn btn-success desbloquear' data-toggle='tooltip' data-id="+v["id"]+" data-placement='top' title='Desbloquear'><i class='fa fa-unlock'></i></a>";
         strHTML+="</td>";
@@ -170,7 +173,7 @@ function desbanearUsuario(id){
     });
 }
 
-function modificarUsuario(login, nombres, apellidos, tipo, clave, clave_2, estacion, id){
+function modificarUsuario(login, nombres, apellidos, tipo, clave, clave_2, estacion, id, vip){
     if (id=="" || !parseInt(id) || parseInt(id)<1){
         console.log(id, login, nombres, apellidos, tipo, clave, clave_2, estacion);
         alert("Ocurrió un problema, intente nuevamente o comuníquese con el administrador del sistema!");
@@ -208,7 +211,7 @@ function modificarUsuario(login, nombres, apellidos, tipo, clave, clave_2, estac
     }
     $.ajax({
         url     :"../controladores/controladores_usuarios.php",
-        data    : {band:"modificarUsuario", login:login, nombres:nombres, apellidos:apellidos, tipo:tipo, clave:clave, estacion:estacion, id:id},
+        data    : {band:"modificarUsuario", login:login, nombres:nombres, apellidos:apellidos, tipo:tipo, clave:clave, estacion:estacion, id:id, vip:vip},
         dataType:"text",
         type    :"post",
         error   : function(resp){
@@ -227,6 +230,7 @@ function modificarUsuario(login, nombres, apellidos, tipo, clave, clave_2, estac
     });
 }
 $(document).ready(function () {
+    $("[name='my-checkbox']").bootstrapSwitch();
     $("#tabUsuarios").dataTable({
         language: {
             url: '../js/media/js/Spanish.json'
@@ -245,10 +249,12 @@ $(document).ready(function () {
         password=$("#password").val();
         password_2=$("#password_2").val();
         estacion=$("#selEstacion").val();
+        vip=$("#vip").is(":checked");
+        vip=(vip)?1:0;
         if (!confirm("¿Está seguro de registrar éste usuario?")){
             return;
         }
-        registrarUsuario(login,nombres,apellidos,tipo,password, password_2, estacion)
+        registrarUsuario(login,nombres,apellidos,tipo,password, password_2, estacion,vip);
     });
     $(document).on("blur", "#txtLogin", function () {
         valor=$(this).val();
@@ -282,6 +288,8 @@ $(document).ready(function () {
         tipo_id=$(this).data("tipo");
         estacion=$(this).data("estacion");
         id=$(this).data("id");
+        vip=($(this).data("vip")==1)?true:false;
+        $("#vip").bootstrapSwitch('state', vip);
         $("#modificar").slideDown();
         $("#registrar").slideUp();
         $("#txtLogin").val(login);
@@ -309,6 +317,8 @@ $(document).ready(function () {
         clave_2=$("#password_2").val();
         estacion=$("#selEstacion").val();
         id=$("#tempId").val();
-        modificarUsuario(login, nombres, apellidos, tipo, clave, clave_2, estacion, id);
+        vip=$("#vip").is(":checked");
+        vip=(vip)?1:0;
+        modificarUsuario(login, nombres, apellidos, tipo, clave, clave_2, estacion, id, vip);
     });
 });

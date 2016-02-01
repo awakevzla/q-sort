@@ -15,7 +15,8 @@ switch ($band){
         $clave=$_REQUEST["clave"];
         $tipo=$_REQUEST["tipo"];
         $estacion=$_REQUEST["estacion"];
-        echo $usuarios->registrarUsuario($login, $nombres, $apellidos, $tipo, $clave, $estacion);
+        $vip=$_REQUEST["vip"];
+        echo $usuarios->registrarUsuario($login, $nombres, $apellidos, $tipo, $clave, $estacion, $vip);
         break;
     case 'getEstaciones':
         echo json_encode($usuarios->getEstaciones());
@@ -40,7 +41,12 @@ switch ($band){
         $tipo=$_REQUEST["tipo"];
         $estacion=$_REQUEST["estacion"];
         $id=$_REQUEST["id"];
-        echo $usuarios->modificarUsuario($login, $nombres, $apellidos, $tipo, $clave, $estacion, $id);
+        $vip=$_REQUEST["vip"];
+        $resp=$usuarios->modificarUsuario($login, $nombres, $apellidos, $tipo, $clave, $estacion, $id, $vip);
+        if ($resp==1){
+            $sesion->setVip($vip);
+        }
+        echo $resp;
         break;
     case 'cambiarClave':
         $clave_anterior=$_REQUEST["clave_anterior"];

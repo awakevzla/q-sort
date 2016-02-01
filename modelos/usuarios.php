@@ -24,7 +24,8 @@ class Usuario
           tipos.nombre as tipo,
           usr.tipo_id,
           CASE WHEN (ISNULL(est.id)) THEN 'N/A' ELSE est.nombre END as estacion,
-          est.id as estacion_id
+          est.id as estacion_id,
+          usr.vip
         FROM usuarios usr
         JOIN tipos on tipos.id=usr.tipo_id
         LEFT JOIN estaciones est on est.id=usr.estacion_id;";
@@ -55,10 +56,10 @@ class Usuario
         return $array;
     }
 
-    function registrarUsuario($login, $nombres, $apellidos, $tipo, $clave, $estacion_id){
+    function registrarUsuario($login, $nombres, $apellidos, $tipo, $clave, $estacion_id, $vip){
         $estacion=(intval($estacion_id)==0)?'':intval($estacion_id);
-        $sql="INSERT INTO usuarios (login, clave, nombre, apellido, tipo_id, estacion_id)
-            VALUES ('$login', md5('$clave'), '$nombres', '$apellidos', $tipo, '$estacion');";
+        $sql="INSERT INTO usuarios (login, clave, nombre, apellido, tipo_id, estacion_id, vip)
+            VALUES ('$login', md5('$clave'), '$nombres', '$apellidos', $tipo, '$estacion', $vip);";
         $this->con->iniciar_transaccion();
         try{
             $this->con->consulta_bd($sql);
@@ -86,11 +87,11 @@ class Usuario
         $this->con->consulta_bd($sql);
         return 1;
     }
-    function modificarUsuario($login, $nombres, $apellidos, $tipo, $clave, $estacion, $id){
+    function modificarUsuario($login, $nombres, $apellidos, $tipo, $clave, $estacion, $id, $vip){
         if ($clave=="")
-            $sql = "UPDATE usuarios set login='$login', nombre='$nombres', apellido='$apellidos', tipo_id=$tipo, estacion_id=$estacion WHERE id=$id";
+            $sql = "UPDATE usuarios set login='$login', nombre='$nombres', apellido='$apellidos', tipo_id=$tipo, estacion_id=$estacion, vip=$vip WHERE id=$id";
         else
-            $sql = "UPDATE usuarios set login='$login', clave=md5('$clave'), nombre='$nombres', apellido='$apellidos', tipo_id=$tipo, estacion_id=$estacion WHERE id=$id";
+            $sql = "UPDATE usuarios set login='$login', clave=md5('$clave'), nombre='$nombres', apellido='$apellidos', tipo_id=$tipo, estacion_id=$estacion, vip=$vip WHERE id=$id";
         $this->con->iniciar_transaccion();
         try{
             $this->con->consulta_bd($sql);

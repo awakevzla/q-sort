@@ -26,8 +26,10 @@ $estaciones=$User->getEstaciones();
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="../css/vistas.css">
     <link rel="stylesheet" href="../js/media/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.switch.css">
     <script src="../js/media/js/jquery.dataTables.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.switch.js"></script>
     <script src="../js/usuarios.js"></script>
     <style>
         .estaciones {
@@ -84,6 +86,10 @@ $estaciones=$User->getEstaciones();
                                     ?>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="vip" class="col-sm-1 control-label">VIP</label>
+                                <input type="checkbox" data-on-text="SI" data-off-text="NO" name="my-checkbox" id="vip">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="password" class="col-sm-1 control-label">Clave</label>
@@ -116,21 +122,24 @@ $estaciones=$User->getEstaciones();
                             <th>Tipo</th>
                             <th>Estacion</th>
                             <th>Baneado</th>
+                            <th>VIP</th>
                             <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
                         foreach($usuarios as $k=>$v){
+                            $vip=(($v["vip"])==1)?'Si':"No";
                             echo "<tr>";
                             echo "<td>".$v["login"]."</td>";
                             echo "<td>".$v["nombre_completo"]."</td>";
                             echo "<td>".$v["tipo"]."</td>";
                             echo "<td>".utf8_decode($v["estacion"])."</td>";
                             echo "<td>".$v["baneado"]."</td>";
+                            echo "<td>".$vip."</td>";
                             echo "<td style='width: 180px;'>
                                 <a class='btn btn-danger eliminar' data-toggle='tooltip' data-placement='top' data-id=".$v["id"]." title='Eliminar'><span class='glyphicon glyphicon-remove'></span></a>
-                                <a class='btn btn-warning modificar' data-toggle='tooltip' data-nombre='".$v["nombre"]."' data-estacion='".$v["estacion_id"]."' data-apellido='".$v["apellido"]."' data-login='".$v["login"]."' data-estacion data-tipo='".$v["tipo_id"]."' data-id=".$v["id"]." data-placement='top' title='Modificar'><span class='glyphicon glyphicon-edit'></span></a>
+                                <a class='btn btn-warning modificar' data-toggle='tooltip' data-nombre='".$v["nombre"]."' data-estacion='".$v["estacion_id"]."' data-vip='".$v["vip"]."' data-apellido='".$v["apellido"]."' data-login='".$v["login"]."' data-estacion data-tipo='".$v["tipo_id"]."' data-id=".$v["id"]." data-placement='top' title='Modificar'><span class='glyphicon glyphicon-edit'></span></a>
                                 <a class='btn btn-default bloquear' data-toggle='tooltip' data-id=".$v["id"]." data-placement='top' title='Bloquear'><i class='fa fa-lock'></i></a>
                                 <a class='btn btn-success desbloquear' data-toggle='tooltip' data-id=".$v["id"]." data-placement='top' title='Desbloquear'><i class='fa fa-unlock'></i></a>
                                 </td>";

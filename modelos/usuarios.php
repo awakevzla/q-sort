@@ -46,11 +46,14 @@ class Usuario
 
     function getEstaciones(){
         $sql="SELECT
-          id,
-          nombre,
-          prefijo,
-          descripcion
-        FROM estaciones;";
+          est.id,
+          est.nombre,
+          est.prefijo,
+          est.descripcion,
+          est.id_padre,
+          est.transferir_id
+        FROM estaciones est
+        LEFT JOIN estaciones est2 on est2.id_padre=est.id;";
         $stm=$this->con->consulta_bd($sql);
         $array=$this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
         return $array;

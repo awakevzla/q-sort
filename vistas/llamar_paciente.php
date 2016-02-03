@@ -7,6 +7,8 @@ if ($sesion->sesion_iniciada() == false) {
     header('location:../login.php');
 }
 $pertenece = $sesion->getEstacion_pertenece();
+$estacionInfo=$modulo->getEstacion($pertenece);
+$transferir=$estacionInfo[0]["transferir_id"];
 $estaciones = $modulo->getEstaciones($pertenece);
 $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
 ?>
@@ -23,6 +25,7 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
     <script src="../js/bootstrap.min.js"></script>
     <script>
         var est =<?= $pertenece;?>;
+        var transferir =<?= $transferir;?>;
     </script>
     <script src="../funciones_generales.js?r=<?= date('d-m-Y H:i:s') ?>"></script>
     <style>

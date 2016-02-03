@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     $("#llamar").click(function () {
         //llamarPaciente($(".selEstacion").val());
-        llamarPaciente(est);                     //(2) HAY QUE CAMBIARLO POR LA VARIABLE ESTACION ACTUAL
+        llamarPaciente(est, transferir);                     //(2) HAY QUE CAMBIARLO POR LA VARIABLE ESTACION ACTUAL
         $('#llamar').attr("disabled", true);
 
         setTimeout(function(){
@@ -107,10 +107,10 @@ function atendiendo(est){
     });
 }
 
-function llamarPaciente(est){
+function llamarPaciente(est, transferir){
     $.ajax({
         url     :"../controladores/controladores_generar_ticket.php",
-        data    : {est:est,band:"llamarPaciente"},
+        data    : {est:est, transferir:transferir,band:"llamarPaciente"},
         dataType:"JSON",
         type    :"post",
         error   : function(resp){

@@ -1,5 +1,6 @@
 var _colas={};
 var _estaciones={};
+var _colas_ordenadas={};
 function cargarColas(){
     $.ajax({
         url     :"../controladores/controladores_estadisticas.php",
@@ -15,6 +16,7 @@ function cargarColas(){
             estaciones=response["estaciones"];
             _estaciones=estaciones;
             colas=response["porEstacion"];
+            _colas_ordenadas=response["ordenado"];
             _colas=colas;
             strHTML="";
             bandAtend=0;
@@ -37,6 +39,7 @@ function cargarColas(){
                                 strHTML += "<td>" + m["ticket"] + "</td>";
                                 /*}
                                  bandAtend=1;*/
+                                bandCola++;
                             });
                         }
                     }else{
@@ -82,7 +85,8 @@ function cargarColas(){
 function ver_cola(estacion_id){
     strHTML="";
     band=0;
-    $.each(_colas[estacion_id][1], function (k, v) {
+    console.log(_colas_ordenadas[estacion_id][1]);
+    $.each(_colas_ordenadas[estacion_id][1], function (k, v) {
         (band==0)?$("#nombre_estacion").html(v["estacion"]):band=1;
         band=1;
         strHTML+='<li class="list-group-item">'+v["ticket"]+'</li>';

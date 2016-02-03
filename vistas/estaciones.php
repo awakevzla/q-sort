@@ -7,7 +7,7 @@ if ($sesion->sesion_iniciada()==false){
     header('location:../login.php');
 }
 if ($sesion->getTipo_usuario()!=1){
-    echo "<script>alert('��sta p�gina es solo para administradores!');</script>";
+    echo "<script>alert('¿Ésta página es solo para administradores!');</script>";
     header('location:../index.php');
 }
 $estaciones=$User->getEstaciones();
@@ -59,6 +59,30 @@ $estaciones=$User->getEstaciones();
                             <input type="text" class="form-control" id="txtPrefijo" placeholder="Prefijo" maxlength="3">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="selPadre" class="col-sm-1 control-label">Estación Padre</label>
+                        <div class="col-sm-3">
+                            <select id="selPadre" class="form-control">
+                                <option value="0">Seleccione...</option>
+                                <?php
+                                    foreach ($estaciones as $k=>$v){
+                                        echo "<option value='".$v["id"]."'>".$v["nombre"]."</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <label for="selTransferencia" class="col-sm-1 control-label">Transferencia Automática</label>
+                        <div class="col-sm-3">
+                            <select id="selTransferencia" class="form-control">
+                                <option value="0">Seleccione...</option>
+                                <?php
+                                foreach ($estaciones as $k=>$v){
+                                    echo "<option value='".$v["id"]."'>".$v["nombre"]."</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
                     <div class="row" id="registrar">
                         <div class="col-md-3 col-md-offset-6">
                             <a class="btn btn-success" id="btnRegistrar"><span class="glyphicon glyphicon-floppy-save"></span> Registrar</a>
@@ -79,20 +103,40 @@ $estaciones=$User->getEstaciones();
                         <th>Nombre</th>
                         <th>Descripcion</th>
                         <th>Prefijo</th>
+                        <th>Estación Padre</th>
+                        <th>Transferencia a Estación</th>
                         <th>Accion</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
                     foreach($estaciones as $k=>$v){
+                        $padre=($v["id_padre"]==0)?'N/A':$v["id_padre"];
+                        $transf=($v["transferir_id"]==0)?'N/A':$v["transferir_id"];
+                        if ($padre != 0 ){
+                            foreach ($estaciones as $l=>$m) {
+                                if ($m["id"]==$padre) {
+                                    $padre = $m["nombre"];
+                                }
+                            }
+                        }
+                        if ($transf != 0 ){
+                            foreach ($estaciones as $l=>$m) {
+                                if ($m["id"]==$transf) {
+                                    $transf = $m["nombre"];
+                                }
+                            }
+                        }
                         echo "<tr>";
                             echo "<td>".$v["id"]."</td>";
                             echo "<td>".utf8_decode($v["nombre"])."</td>";
                             echo "<td>".utf8_decode($v["descripcion"])."</td>";
                             echo "<td>".$v["prefijo"]."</td>";
+                            echo "<td>".$padre."</td>";
+                            echo "<td>".$transf."</td>";
                             echo "<td style='width: 180px;'>
                                     <a class='btn btn-danger eliminar' data-toggle='tooltip' data-placement='top' data-id=".$v["id"]." title='Eliminar'><span class='glyphicon glyphicon-remove'></span></a>
-                                    <a class='btn btn-warning modificar' data-toggle='tooltip' data-nombre='".utf8_decode($v["nombre"])."' data-descripcion='".utf8_decode($v["descripcion"])."' data-prefijo='".$v["prefijo"]."' data-id='".$v["id"]."' data-placement='top' title='Modificar'><span class='glyphicon glyphicon-edit'></span></a>
+                                    <a class='btn btn-warning modificar' data-toggle='tooltip' data-transferir='".$v["transferir_id"]."' data-padre='".$v["id_padre"]."' data-nombre='".utf8_decode($v["nombre"])."' data-descripcion='".utf8_decode($v["descripcion"])."' data-prefijo='".$v["prefijo"]."' data-id='".$v["id"]."' data-placement='top' title='Modificar'><span class='glyphicon glyphicon-edit'></span></a>
                                 </td>";
                             echo "</td>";
                         echo "</tr>";

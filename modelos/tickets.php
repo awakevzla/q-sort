@@ -58,6 +58,16 @@ class Tickets
         return $arrayEstaciones;
     }
 
+    function getEstacion($id)
+    {
+        $sql = "SELECT id, nombre, prefijo, transferir_id, id_padre from estaciones where id=$id AND activo=TRUE;";
+        $this->con->abrir_conexion();
+        $stm = $this->con->consulta_bd($sql);
+        $arrayEstaciones = $this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
+        $this->con->cerrar_conexion();
+        return $arrayEstaciones;
+    }
+
     function getTodasEstaciones()
     {
         $sql = "SELECT id, nombre, prefijo from estaciones WHERE activo=TRUE;";
@@ -84,7 +94,7 @@ class Tickets
     function getAtendiendo($est)
     {
 
-        $sql = "SELECT id, ticket, 0 as clEspera, correlativo from cola WHERE estacion_id=$est and estado_id=2 and date_format(fecha_hora_inicio, '%d-%m-%Y') = date_format(CURDATE(), '%d-%m-%Y');";
+        $sql = "SELECT id, ticket, 0 as clEspera, correlativo, estacion_id from cola WHERE estacion_id=$est and estado_id=2 and date_format(fecha_hora_inicio, '%d-%m-%Y') = date_format(CURDATE(), '%d-%m-%Y');";
         $this->con->abrir_conexion();
         $stm = $this->con->consulta_bd($sql);
         $ticket = $this->con->obtener_fila_consulta($stm, Sql::ARRAY_ASOCIATIVO);
@@ -229,6 +239,7 @@ class Tickets
         $stm = $conex->consulta_bd($sql);
         $Result = array();
         $arrayR = array();
+        $arrayOrdenado = array();
         $arrayColas = $conex->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
         foreach ($arrayColas as $k => $v) {
             $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["vip"]][$v["cola_id"]]["estado_id"] = $v["estado_id"];
@@ -239,7 +250,12 @@ class Tickets
             $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["vip"]][$v["cola_id"]]["estacion"] = utf8_decode($v["estacion"]);
             $arrayR[$v["estacion_id"]][$v["estado_id"]][$v["vip"]][$v["cola_id"]]["cola_id"] = $v["cola_id"];
         }
+        foreach ($arrayColas as $k=>$v) {
+            $arrayOrdenado[$v["estacion_id"]][$v["estado_id"]][$k]["ticket"]=$v["ticket"];
+        }
+
         $Result["porEstacion"] = $arrayR;
+        $Result["ordenado"] = $arrayOrdenado;
         $Result["estaciones"] = $this->getTodasEstaciones();
         return $Result;
     }
@@ -332,15 +348,15 @@ class Tickets
         return $aryRange;
     }
 
-    function registrarEstacion($nombre, $descripcion, $prefijo){
-        $sql="INSERT INTO estaciones (nombre, descripcion, prefijo) VALUES ('$nombre', '$descripcion', '$prefijo')";
+    function registrarEstacion($nombre, $descripcion, $prefijo, $id_padre, $transferencia_id){
+        $sql="INSERT INTO estaciones (nombre, descripcion, prefijo, id_padre, transferir_id) VALUES ('$nombre', '$descripcion', '$prefijo', $id_padre, $transferencia_id)";
         $this->con->abrir_conexion();
         $this->con->consulta_bd($sql);
         return 1;
     }
 
-    function modificarEstacion($id, $nombre, $descripcion, $prefijo){
-        $sql="UPDATE estaciones SET nombre='$nombre', descripcion='$descripcion', prefijo='$prefijo' WHERE id=$id";
+    function modificarEstacion($id, $nombre, $descripcion, $prefijo, $id_padre, $transferencia_id){
+        $sql="UPDATE estaciones SET nombre='$nombre', descripcion='$descripcion', prefijo='$prefijo', id_padre=$id_padre, transferir_id=$transferencia_id WHERE id=$id";
         $this->con->abrir_conexion();
         $this->con->consulta_bd($sql);
         return 1;

@@ -91,7 +91,7 @@ class Tickets
         return $arrayEstaciones;
     }
 
-    function getAtendiendo($est)
+    function getAtendiendo($est, $padre=0)
     {
 
         $sql = "SELECT id, ticket, 0 as clEspera, correlativo, estacion_id from cola WHERE estacion_id=$est and estado_id=2 and date_format(fecha_hora_inicio, '%d-%m-%Y') = date_format(CURDATE(), '%d-%m-%Y');";
@@ -99,6 +99,9 @@ class Tickets
         $stm = $this->con->consulta_bd($sql);
         $ticket = $this->con->obtener_fila_consulta($stm, Sql::ARRAY_ASOCIATIVO);
         //if($ticket){
+        if ($padre){
+            $est=$padre;
+        }
         $sql = "SELECT COUNT(id) as clEspera FROM cola WHERE  cola.estacion_id=$est and cola.estado_id=1 and date_format(fecha_hora_inicio, '%d-%m-%Y') = date_format(CURDATE(), '%d-%m-%Y')";
         $this->con->abrir_conexion();
         $stm = $this->con->consulta_bd($sql);
@@ -108,8 +111,13 @@ class Tickets
         return $ticket;
     }
 
-    function getSigPaciente($est)
+    function getSigPaciente($est, $padre)
     {
+        $auxest="";
+        $auxest=$est;
+        if ($padre){
+            $est=$padre;
+        }
         $sql = "SELECT
             id
         FROM cola
@@ -122,6 +130,7 @@ class Tickets
         if ($ticket) {
             $fechaHora=date('Y-m-d H:i:s');
             $this->generasql("cola", "fecha_hora_atencion", "$fechaHora");
+            $this->generasql("cola", "estacion_id",$auxest);
             $this->generasql("cola", "estado_id", 2, true, true, "where id=" . $ticket["id"]);
         } else {
             return 0;

@@ -1,11 +1,11 @@
 $(document).ready(function () {
     $("#contEstaciones").hide();
     $('#boton').attr("disabled", true);
-    atendiendo(est);
+    atendiendo(est, padre);
 
     $("#llamar").click(function () {
         //llamarPaciente($(".selEstacion").val());
-        llamarPaciente(est, transferir);                     //(2) HAY QUE CAMBIARLO POR LA VARIABLE ESTACION ACTUAL
+        llamarPaciente(est, transferir, padre);                     //(2) HAY QUE CAMBIARLO POR LA VARIABLE ESTACION ACTUAL
         $('#llamar').attr("disabled", true);
 
         setTimeout(function(){
@@ -28,7 +28,7 @@ $(document).ready(function () {
     });
     $(".trasladar").click(function () {
         id=$(this).data("id");
-        trasladarPaciente(est, id);
+        trasladarPaciente(est, id, padre);
     });
 });
 
@@ -55,7 +55,7 @@ function cerrarTicket(estacion_id){
     });
 }
 
-function trasladarPaciente(est, id){
+function trasladarPaciente(est, id, padre){
     if (!confirm("¿Está seguro de trasladar a éste paciente?")){
         return;
     }
@@ -77,15 +77,15 @@ function trasladarPaciente(est, id){
                 location.reload();
             }
             console.log("va a llamar atendiendo");
-            atendiendo(est);
+            atendiendo(est, padre);
         }
     });
 }
 
-function atendiendo(est){
+function atendiendo(est, padre){
     $.ajax({
         url     :"../controladores/controladores_generar_ticket.php",
-        data    : {est:est,band:"atendiendo"},
+        data    : {est:est,padre:padre,band:"atendiendo"},
         dataType:"json",
         type    :"post",
         error   : function(resp){
@@ -107,10 +107,10 @@ function atendiendo(est){
     });
 }
 
-function llamarPaciente(est, transferir){
+function llamarPaciente(est, transferir, padre){
     $.ajax({
         url     :"../controladores/controladores_generar_ticket.php",
-        data    : {est:est, transferir:transferir,band:"llamarPaciente"},
+        data    : {est:est, transferir:transferir, padre:padre,band:"llamarPaciente"},
         dataType:"JSON",
         type    :"post",
         error   : function(resp){
@@ -122,7 +122,7 @@ function llamarPaciente(est, transferir){
             if (response=="0"){
                 alert("No hay pacientes en espera!");
             }
-            atendiendo(est);
+            atendiendo(est, padre);
         }
     });
 }

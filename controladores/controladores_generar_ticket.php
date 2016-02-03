@@ -12,20 +12,22 @@ switch ($band) {
         break;
     case 'atendiendo':
         $est = $_REQUEST["est"];
-        $result["respuesta"] = $ticket->getAtendiendo($est);
+        $padre=$_REQUEST["padre"];
+        $result["respuesta"] = $ticket->getAtendiendo($est, $padre);
         echo json_encode($result);
         break;
     case 'llamarPaciente':
         $est = $_REQUEST["est"];
-        $id_atend = $ticket->getAtendiendo($est);
+        $padre=$_REQUEST["padre"];
+        $id_atend = $ticket->getAtendiendo($est, $padre);
         $transferir=$_REQUEST["transferir"];
-        if ($transferir==0) {
+        if ($transferir==0 && isset($id_atend["id"])) {
             $result = $ticket->cerrarTicket($id_atend["id"]);
         }
         if ($transferir && isset($id_atend["id"])){
             $ticket->trasladarPaciente($id_atend['estacion_id'], $transferir);
         }
-        $result = $ticket->getSigPaciente($est);
+        $result = $ticket->getSigPaciente($est, $padre);
         echo json_encode($result);
         break;
     case 'trasladarPaciente':

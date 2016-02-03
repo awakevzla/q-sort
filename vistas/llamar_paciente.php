@@ -9,6 +9,10 @@ if ($sesion->sesion_iniciada() == false) {
 $pertenece = $sesion->getEstacion_pertenece();
 $estacionInfo=$modulo->getEstacion($pertenece);
 $transferir=$estacionInfo[0]["transferir_id"];
+$padre=$estacionInfo[0]["id_padre"];
+/*if ($padre){
+    $pertenece=$padre;
+}*/
 $estaciones = $modulo->getEstaciones($pertenece);
 $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
 ?>
@@ -26,6 +30,7 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
     <script>
         var est =<?= $pertenece;?>;
         var transferir =<?= $transferir;?>;
+        var padre =<?= $padre;?>;
     </script>
     <script src="../funciones_generales.js?r=<?= date('d-m-Y H:i:s') ?>"></script>
     <style>

@@ -85,8 +85,13 @@ function cargarColas(){
 function ver_cola(estacion_id){
     strHTML="";
     band=0;
-    console.log(_colas_ordenadas[estacion_id][1]);
+    cont=0;
+    if(_colas_ordenadas[estacion_id]==undefined){
+        alert("¡No tiene tickets en colas!");
+        return;
+    }
     $.each(_colas_ordenadas[estacion_id][1], function (k, v) {
+        cont++;
         (band==0)?$("#nombre_estacion").html(v["estacion"]):band=1;
         band=1;
         strHTML+='<li class="list-group-item">'+v["ticket"]+'</li>';

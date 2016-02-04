@@ -39,7 +39,6 @@ function cargarColas(){
                                 strHTML += "<td>" + m["ticket"] + "</td>";
                                 /*}
                                  bandAtend=1;*/
-                                bandCola++;
                             });
                         }
                     }else{
@@ -49,14 +48,14 @@ function cargarColas(){
                         if (colas[v["id"]][1][1]!=undefined){
                             $.each(colas[v["id"]][1][1], function (l, m) {
                                 strHTML += "<td>" + m["ticket"] + "</td>";
+                                bandCola++;
                             });
-                            bandCola++;
                         }
                         $.each(colas[v["id"]][1][0], function (l, m) {
                             if (bandCola<4){
                                 strHTML+="<td>"+m["ticket"]+"</td>";
+                                bandCola++;
                             }
-                            bandCola++;
                         });
                     }else{
                     }
@@ -86,7 +85,7 @@ function ver_cola(estacion_id){
     strHTML="";
     band=0;
     cont=0;
-    if(_colas_ordenadas[estacion_id]==undefined){
+    if(_colas_ordenadas[estacion_id][1]==undefined){
         alert("¡No tiene tickets en colas!");
         return;
     }

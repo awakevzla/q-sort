@@ -62,7 +62,7 @@ $usuario=$sesion->getNombre_usuario()." ".$sesion->getApellido_usuario();
                             <ul class="dropdown-menu">
                                 <li><a class="menu" href="vistas/ver_colas.php"><i class="fa fa-group"></i> Ver Colas</a></li>
                                 <li><a class="menu" href="vistas/estadisticas.php"><i class="fa fa-male fa-lg"></i> Atención de Pacientes</a></li>
-                                <li><a class="menu" href="vistas/estadisticas_tiempo.php"><i class="fa fa-clock-o"></i> Atención de Pacientes</a></li>
+                                <li><a class="menu" href="vistas/estadisticas_tiempo.php"><i class="fa fa-clock-o"></i> Tiempo de Atención</a></li>
                             </ul>
                         </li>
                     </ul>

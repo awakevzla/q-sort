@@ -50,7 +50,7 @@ class Tickets
 
     function getEstaciones($pertenece)
     {
-        $sql = "SELECT id, nombre, prefijo from estaciones where id!=$pertenece AND activo=TRUE;";
+        $sql = "SELECT id, nombre, prefijo, id_padre from estaciones where id!=$pertenece AND activo=TRUE;";
         $this->con->abrir_conexion();
         $stm = $this->con->consulta_bd($sql);
         $arrayEstaciones = $this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);

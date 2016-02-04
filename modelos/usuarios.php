@@ -86,7 +86,7 @@ class Usuario
         return 1;
     }
     function desbanearUsuario($id){
-        $sql="UPDATE usuarios set baneado=0 WHERE id=$id";
+        $sql="UPDATE usuarios set baneado=0, intentos=0 WHERE id=$id";
         $this->con->consulta_bd($sql);
         return 1;
     }

@@ -30,7 +30,7 @@ $estaciones=$User->getEstaciones();
     <script src="../js/media/js/jquery.dataTables.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/bootstrap.switch.js"></script>
-    <script src="../js/usuarios.js"></script>
+    <script src="../js/usuarios.js?r=<?= date('d-m-Y H:i:s') ?>"></script>
     <style>
         .estaciones {
             width: 500px;

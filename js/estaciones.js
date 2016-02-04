@@ -1,5 +1,9 @@
 $(document).ready(function () {
     $(".btn").tooltip();
+    $("input").blur(function () {
+        valor=$(this).val().toUpperCase();
+        $(this).val(valor);
+    });
     $(document).on("click", ".modificar", function () {
         id=$(this).data("id");
         nombre=$(this).data("nombre");

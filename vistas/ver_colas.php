@@ -20,7 +20,7 @@ $arrayColas=$modulo->getColas();
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="../css/vistas.css">
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/estadisticas.js"></script>
+    <script src="../js/estadisticas.js?r=<?= date('d-m-Y H:i:s') ?>"></script>
     <style>
         .estaciones {
             width: 500px;

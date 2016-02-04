@@ -31,6 +31,12 @@ if (isset($_GET["r"])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#login__username").focus();
+        });
+    </script>
 </head>
 <body class="align">
 <div class="site__container">

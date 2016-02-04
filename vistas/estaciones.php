@@ -26,7 +26,7 @@ $estaciones=$User->getEstaciones();
     <link rel="stylesheet" href="../js/media/css/jquery.dataTables.min.css">
     <script src="../js/media/js/jquery.dataTables.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/estaciones.js"></script>
+    <script src="../js/estaciones.js?r=<?= date('d-m-Y H:i:s') ?>"></script>
     <style>
         .estaciones {
             width: 500px;
@@ -56,7 +56,7 @@ $estaciones=$User->getEstaciones();
                         </div>
                         <label for="txtPrefijo" class="col-sm-1 control-label">Prefijo</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="txtPrefijo" placeholder="Prefijo" maxlength="3">
+                            <input type="text" class="form-control" id="txtPrefijo" placeholder="Prefijo" maxlength="6">
                         </div>
                     </div>
                     <div class="form-group">

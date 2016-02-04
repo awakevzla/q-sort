@@ -1,2 +1,4 @@
 db/parametros_bd.php
 .idea/*
+recursos/*
+!recursos/index.php

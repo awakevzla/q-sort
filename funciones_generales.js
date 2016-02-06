@@ -5,7 +5,14 @@ $(document).ready(function () {
 
     $("#llamar").click(function () {
         //llamarPaciente($(".selEstacion").val());
-        llamarPaciente(est, transferir, padre);                     //(2) HAY QUE CAMBIARLO POR LA VARIABLE ESTACION ACTUAL
+        trans=transferir;
+        atiende=$("#ticket").text();
+        if (atiende!="---/---"){
+            if (!confirm("¿Desea transferir el paciente a "+transferir_est+"?")){
+                trans=0;
+            }
+        }
+        llamarPaciente(est, trans, padre, prioridad);                     //(2) HAY QUE CAMBIARLO POR LA VARIABLE ESTACION ACTUAL
         $('#llamar').attr("disabled", true);
 
         setTimeout(function(){
@@ -50,7 +57,7 @@ function cerrarTicket(estacion_id){
                 alert("Ocurrió un inconveniente al cerrar ticket, intente nuevamente o comuníquese con el administrador");
                 location.reload();
             }
-            atendiendo(est);
+            atendiendo(est, padre);
         }
     });
 }
@@ -93,9 +100,7 @@ function atendiendo(est, padre){
             console.log(resp);
         },
         success:function(response){
-            console.log(response);
             response=response.respuesta;
-            console.log(response.correlativo);
             if (response["correlativo"]==undefined){   // SI NO ESTA ATENDIENDO A NADIE
                 $("#ticket").html("---/---");
                 $("#ticket").attr("data-id_atend",0);
@@ -107,10 +112,10 @@ function atendiendo(est, padre){
     });
 }
 
-function llamarPaciente(est, transferir, padre){
+function llamarPaciente(est, transferir, padre, prioridad){
     $.ajax({
         url     :"../controladores/controladores_generar_ticket.php",
-        data    : {est:est, transferir:transferir, padre:padre,band:"llamarPaciente"},
+        data    : {est:est, transferir:transferir, padre:padre,prioridad:prioridad,band:"llamarPaciente"},
         dataType:"JSON",
         type    :"post",
         error   : function(resp){

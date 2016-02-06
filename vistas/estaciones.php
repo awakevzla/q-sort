@@ -82,6 +82,13 @@ $estaciones=$User->getEstaciones();
                                 ?>
                             </select>
                         </div>
+                        <label for="selPrioridad" class="col-sm-1 control-label">Prioridad</label>
+                        <div class="col-sm-3">
+                            <select id="selPrioridad" class="form-control">
+                                <option value="0">Normal</option>
+                                <option value="1">Alta</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="row" id="registrar">
                         <div class="col-md-3 col-md-offset-6">
@@ -105,6 +112,7 @@ $estaciones=$User->getEstaciones();
                         <th>Prefijo</th>
                         <th>Estación Padre</th>
                         <th>Transferencia a Estación</th>
+                        <th>Prioridad</th>
                         <th>Accion</th>
                     </tr>
                     </thead>
@@ -127,6 +135,7 @@ $estaciones=$User->getEstaciones();
                                 }
                             }
                         }
+                        $prioridad=($v["prioridad"])?"Alta":"Normal";
                         echo "<tr>";
                             echo "<td>".$v["id"]."</td>";
                             echo "<td>".utf8_decode($v["nombre"])."</td>";
@@ -134,9 +143,10 @@ $estaciones=$User->getEstaciones();
                             echo "<td>".$v["prefijo"]."</td>";
                             echo "<td>".$padre."</td>";
                             echo "<td>".$transf."</td>";
+                            echo "<td>".$prioridad."</td>";
                             echo "<td style='width: 180px;'>
                                     <a class='btn btn-danger eliminar' data-toggle='tooltip' data-placement='top' data-id=".$v["id"]." title='Eliminar'><span class='glyphicon glyphicon-remove'></span></a>
-                                    <a class='btn btn-warning modificar' data-toggle='tooltip' data-transferir='".$v["transferir_id"]."' data-padre='".$v["id_padre"]."' data-nombre='".utf8_decode($v["nombre"])."' data-descripcion='".utf8_decode($v["descripcion"])."' data-prefijo='".$v["prefijo"]."' data-id='".$v["id"]."' data-placement='top' title='Modificar'><span class='glyphicon glyphicon-edit'></span></a>
+                                    <a class='btn btn-warning modificar' data-toggle='tooltip' data-prioridad='".$v["prioridad"]."' data-transferir='".$v["transferir_id"]."' data-padre='".$v["id_padre"]."' data-nombre='".utf8_decode($v["nombre"])."' data-descripcion='".utf8_decode($v["descripcion"])."' data-prefijo='".$v["prefijo"]."' data-id='".$v["id"]."' data-placement='top' title='Modificar'><span class='glyphicon glyphicon-edit'></span></a>
                                 </td>";
                             echo "</td>";
                         echo "</tr>";

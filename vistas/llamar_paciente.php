@@ -10,10 +10,14 @@ $pertenece = $sesion->getEstacion_pertenece();
 $estacionInfo=$modulo->getEstacion($pertenece);
 $transferir=$estacionInfo[0]["transferir_id"];
 $padre=$estacionInfo[0]["id_padre"];
-/*if ($padre){
-    $pertenece=$padre;
-}*/
+$prioridad=$estacionInfo[0]["prioridad"];
+$transf_estacion="";
 $estaciones = $modulo->getEstaciones($pertenece);
+foreach ($estaciones as $k=>$v) {
+    if ($transferir==$v["id"]){
+        $transf_estacion=$v["nombre"];
+    }
+}
 $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
 ?>
 <!DOCTYPE html>
@@ -31,6 +35,8 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
         var est =<?= $pertenece;?>;
         var transferir =<?= $transferir;?>;
         var padre =<?= $padre;?>;
+        var transferir_est ='<?= $transf_estacion;?>';
+        var prioridad ='<?= $prioridad;?>';
     </script>
     <script src="../funciones_generales.js?r=<?= date('d-m-Y H:i:s') ?>"></script>
     <style>
@@ -40,7 +46,7 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
             font-size: 40px;
             text-align: left;
         }
-        @media only screen and (max-width: 500px) {
+        @media only screen and (max-width: 700px) {
             .container{
                 color:red;
                 padding: 0;
@@ -49,9 +55,27 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
                 padding: 0;
             }
             .estaciones {
-                width: 200px;
-                height: 30px;
-                font-size: 10px;
+                width: 300px;
+                height: 40px;
+                font-size: 20px;
+                text-align: left;
+            }
+        }
+        @media only screen and (max-width: 500px) {
+            .panel-heading{
+                font-size:10px;
+            }
+            .container{
+                color:red;
+                padding: 0;
+            }
+            body{
+                padding: 0;
+            }
+            .estaciones {
+                width: 150px;
+                height: 40px;
+                font-size: 15px;
                 text-align: left;
             }
         }
@@ -65,51 +89,61 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
                 style="float: right;text-decoration: underline;"><strong>Estación: <?php echo utf8_decode($estacionPertenece[0]["nombre"]) . "/" . utf8_decode($estacionPertenece[0]["descripcion"]); ?></strong></span>
         </div>
         <div class="panel-body">
-            <div class="row" style="text-align: center;" id="contOpcion">
-                <div class="col-sm-12">
-                    <button class="btn btn-success estaciones" id="llamar"><span
-                            class="glyphicon glyphicon-bell"></span></span> Llamar Paciente</button><br><br>
-                    <button class="btn btn-primary estaciones" id="trasladar"><i class="fa fa-exchange"></i> Trasladar
-                        Paciente</button><br><br>
-                    <button class="btn btn-danger estaciones" id="cerrar"><span
-                            class="glyphicon glyphicon-ban-circle"></span> Cerrar
-                        Ticket</button><br><br>
-                </div>
-            </div>
-            <br>
-
-            <div class="row" id="contEstaciones" style="text-align: center;">
-                <div class="col-md-12">
-                    <?php
-                    foreach ($estaciones as $k => $v) {
-                        ?>
-                        <a class="btn btn-primary estaciones trasladar" style="text-align: left;"
-                           data-id="<?php echo $v["id"]; ?>"><span
-                                class="glyphicon glyphicon-ok-circle"></span><?php echo utf8_decode($v["nombre"]); ?></a><br><br>
-                        <?php
-                    }
-                    ?>
-                    <button class="btn btn-danger estaciones" id="volver" style="text-align: left;"><span
-                            class="glyphicon glyphicon-ok-circle"></span>Volver</button><br><br>
-                </div>
-            </div>
-            <br>
-
-            <div class="row" id="contTicket" style="text-align: center;">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" style="text-align: center;"><p>ATENDIENDO / ESTACIÓN: <b><?php echo strtoupper(utf8_decode($estacionPertenece[0]["nombre"]))?></b></p></div>
-                        <div class="panel-body">
-                            <label class="form-control" style="height: auto;">Ticket: <span id="ticket"> ---/--- </span></label>
-                            <label class="form-control" style="height: auto;">Clientes en espera: <span
-                                    id="clEspera"> 0 </span></label>
+            <table align="center" style="width: 100%;">
+                <tr>
+                    <td>
+                        <div class="row" style="text-align: center;" id="contOpcion">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success estaciones" id="llamar"><span
+                                        class="glyphicon glyphicon-bell"></span></span> Llamar Paciente</button><br><br>
+                                <?php
+                                if (!$transferir){
+                                ?>
+                                <button class="btn btn-primary estaciones" id="trasladar"><i class="fa fa-exchange"></i> Trasladar
+                                    Paciente</button><br><br>
+                                <?php
+                                }
+                                ?>
+                                <button class="btn btn-danger estaciones" id="cerrar"><span
+                                        class="glyphicon glyphicon-ban-circle"></span> Cerrar
+                                    Ticket</button><br><br>
+                            </div>
                         </div>
-                        <div class="panel-footer"><p>Clínica "La Guadalupe"</p></div>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
+                        <br>
+
+                        <div class="row" id="contEstaciones" style="text-align: center;">
+                            <div class="col-md-12">
+                                <?php
+                                foreach ($estaciones as $k => $v) {
+                                    ?>
+                                    <a class="btn btn-primary estaciones trasladar" style="text-align: left;"
+                                       data-id="<?php echo $v["id"]; ?>"><span
+                                            class="glyphicon glyphicon-ok-circle"></span><?php echo utf8_decode($v["nombre"]); ?></a><br><br>
+                                    <?php
+                                }
+                                ?>
+                                <button class="btn btn-danger estaciones" id="volver" style="text-align: left;"><span
+                                        class="glyphicon glyphicon-ok-circle"></span>Volver</button><br><br>
+                            </div>
+                        </div>
+                        <br>
+                    </td>
+                    <td>
+                        <div class="row" id="contTicket" style="text-align: center;">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" style="text-align: center;"><p>ATENDIENDO / ESTACIÓN: <b><?php echo strtoupper(utf8_decode($estacionPertenece[0]["nombre"]))?></b></p></div>
+                                    <div class="panel-body">
+                                        <label class="form-control" style="height: auto;">Ticket: <span id="ticket"> ---/--- </span></label>
+                                        <label class="form-control" style="height: auto;">Clientes en espera: <span
+                                                id="clEspera"> 0 </span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

@@ -17,7 +17,7 @@ $dir="../recursos/";
 $tipo=$_REQUEST["selTipo"];
 switch($tipo){
     case '1':
-        $formatos=array('mp4', 'avi', 'swf', 'webm', 'ogv');
+        $formatos=array('mp4','MP4', 'avi', 'AVI', 'swf', 'SWF', 'webm', 'WEBM', 'ogv', 'OGV');
         $archivo=$_FILES["archivo"]["name"];
         $ext = pathinfo($archivo, PATHINFO_EXTENSION);
         if(!in_array($ext,$formatos) ) {

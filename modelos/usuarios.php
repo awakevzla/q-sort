@@ -51,7 +51,8 @@ class Usuario
           est.prefijo,
           est.descripcion,
           est.id_padre,
-          est.transferir_id
+          est.transferir_id,
+          est.prioridad
         FROM estaciones est
         LEFT JOIN estaciones est2 on est2.id_padre=est.id;";
         $stm=$this->con->consulta_bd($sql);

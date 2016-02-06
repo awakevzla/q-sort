@@ -60,7 +60,7 @@ class Tickets
 
     function getEstacion($id)
     {
-        $sql = "SELECT id, nombre, prefijo, transferir_id, id_padre from estaciones where id=$id AND activo=TRUE;";
+        $sql = "SELECT id, nombre, prefijo, transferir_id, id_padre, prioridad from estaciones where id=$id AND activo=TRUE;";
         $this->con->abrir_conexion();
         $stm = $this->con->consulta_bd($sql);
         $arrayEstaciones = $this->con->obtener_array_consulta($stm, Sql::ARRAY_ASOCIATIVO);
@@ -288,7 +288,7 @@ class Tickets
         $conex->consulta_bd($sql);
     }
 
-    function trasladarPaciente($estacion_origen, $estacion_destino)
+    function trasladarPaciente($estacion_origen, $estacion_destino, $prioridad=0)
     {
         $conex = new Sql();
         $conex->abrir_conexion();
@@ -299,7 +299,11 @@ class Tickets
         } else {
             return "No hay paciente en atencion";
         }
-        $sql = "INSERT INTO cola (correlativo, ticket, estacion_id, estado_id) VALUES ('" . $atendiendo["correlativo"] . "', '" . $atendiendo["ticket"] . "', $estacion_destino, 1)";
+        if ($prioridad==1){
+            $sql = "INSERT INTO cola (correlativo, ticket, estacion_id, estado_id, vip) VALUES ('" . $atendiendo["correlativo"] . "', '" . $atendiendo["ticket"] . "', $estacion_destino, 1, 1)";
+        }else{
+            $sql = "INSERT INTO cola (correlativo, ticket, estacion_id, estado_id) VALUES ('" . $atendiendo["correlativo"] . "', '" . $atendiendo["ticket"] . "', $estacion_destino, 1)";
+        }
         $conex->consulta_bd($sql);
         return 1;
     }
@@ -357,15 +361,15 @@ class Tickets
         return $aryRange;
     }
 
-    function registrarEstacion($nombre, $descripcion, $prefijo, $id_padre, $transferencia_id){
-        $sql="INSERT INTO estaciones (nombre, descripcion, prefijo, id_padre, transferir_id) VALUES ('$nombre', '$descripcion', '$prefijo', $id_padre, $transferencia_id)";
+    function registrarEstacion($nombre, $descripcion, $prefijo, $id_padre, $transferencia_id, $prioridad){
+        $sql="INSERT INTO estaciones (nombre, descripcion, prefijo, id_padre, transferir_id, prioridad) VALUES ('$nombre', '$descripcion', '$prefijo', $id_padre, $transferencia_id, $prioridad)";
         $this->con->abrir_conexion();
         $this->con->consulta_bd($sql);
         return 1;
     }
 
-    function modificarEstacion($id, $nombre, $descripcion, $prefijo, $id_padre, $transferencia_id){
-        $sql="UPDATE estaciones SET nombre='$nombre', descripcion='$descripcion', prefijo='$prefijo', id_padre=$id_padre, transferir_id=$transferencia_id WHERE id=$id";
+    function modificarEstacion($id, $nombre, $descripcion, $prefijo, $id_padre, $transferencia_id, $prioridad){
+        $sql="UPDATE estaciones SET prioridad=$prioridad, nombre='$nombre', descripcion='$descripcion', prefijo='$prefijo', id_padre=$id_padre, transferir_id=$transferencia_id WHERE id=$id";
         $this->con->abrir_conexion();
         $this->con->consulta_bd($sql);
         return 1;

@@ -11,11 +11,13 @@ $(document).ready(function () {
         prefijo=$(this).data("prefijo");
         id_padre=$(this).data('padre');
         transferir_id=$(this).data('transferir');
+        prioridad=$(this).data("prioridad");
         $("#txtNombre").val(nombre);
         $("#txtDescripcion").val(descripcion);
         $("#txtPrefijo").val(prefijo);
         $("#selPadre").val(id_padre);
         $("#selTransferencia").val(transferir_id);
+        $("#selPrioridad").val(prioridad);
         console.log(id_padre);
         $("#tempId").val(id);
         $("#modificar").slideDown();
@@ -32,6 +34,7 @@ $(document).ready(function () {
         prefijo=$("#txtPrefijo").val();
         id_padre=$("#selPadre").val();
         transferir=$("#selTransferencia").val();
+        prioridad=$("#selPrioridad").val();
         if (nombre=="" || descripcion=="" || prefijo==""){
             alert("Complete todos los campos!");
             return;
@@ -39,7 +42,7 @@ $(document).ready(function () {
         if (!confirm("¿Está seguro de registrar esta estacion?")){
             return;
         }
-        registrarEstacion(nombre, descripcion, prefijo, id_padre, transferir);
+        registrarEstacion(nombre, descripcion, prefijo, id_padre, transferir, prioridad);
     });
     $(document).on("click", "#btnModificar", function () {
         id=$("#tempId").val();
@@ -48,6 +51,7 @@ $(document).ready(function () {
         prefijo=$("#txtPrefijo").val();
         id_padre=$("#selPadre").val();
         transferir_id=$("#selTransferencia").val();
+        prioridad=$("#selPrioridad").val();
         if (nombre=="" || descripcion=="" || prefijo==""){
             alert("Complete todos los campos!");
             return;
@@ -55,7 +59,7 @@ $(document).ready(function () {
         if (!confirm("Esta seguro de modificar esta estacion?")){
             return;
         }
-        modificarEstacion(id,nombre,descripcion,prefijo,id_padre, transferir_id);
+        modificarEstacion(id,nombre,descripcion,prefijo,id_padre, transferir_id, prioridad);
     });
     $(document).on("click", ".eliminar", function () {
         id=$(this).data("id");
@@ -77,10 +81,10 @@ function limpiarFormulario(){
     $("#txtNombre").focus();
 }
 
-function registrarEstacion(nombre, descripcion, prefijo, id_padre, transferencia_id){
+function registrarEstacion(nombre, descripcion, prefijo, id_padre, transferencia_id, prioridad){
     $.ajax({
         url     :"../controladores/controladores_generar_ticket.php",
-        data    : {band:"registrarEstacion",nombre:nombre,descripcion:descripcion,prefijo:prefijo,id_padre:id_padre,transferencia_id:transferencia_id},
+        data    : {band:"registrarEstacion",prioridad:prioridad,nombre:nombre,descripcion:descripcion,prefijo:prefijo,id_padre:id_padre,transferencia_id:transferencia_id},
         dataType:"text",
         type    :"post",
         error   : function(resp){
@@ -99,10 +103,10 @@ function registrarEstacion(nombre, descripcion, prefijo, id_padre, transferencia
     });
 }
 
-function modificarEstacion(id,nombre,descripcion,prefijo,id_padre, transferir_id){
+function modificarEstacion(id,nombre,descripcion,prefijo,id_padre, transferir_id, prioridad){
     $.ajax({
         url     :"../controladores/controladores_generar_ticket.php",
-        data    : {band:"modificarEstacion",id:id,nombre:nombre,descripcion:descripcion,prefijo:prefijo,id_padre:id_padre,transferir_id:transferir_id},
+        data    : {band:"modificarEstacion",prioridad:prioridad,id:id,nombre:nombre,descripcion:descripcion,prefijo:prefijo,id_padre:id_padre,transferir_id:transferir_id},
         dataType:"text",
         type    :"post",
         error   : function(resp){

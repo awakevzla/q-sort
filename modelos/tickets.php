@@ -288,6 +288,15 @@ class Tickets
         $conex->consulta_bd($sql);
     }
 
+    function rellamarTicket($id,$estado_id)
+    {
+        $conex = new Sql();
+        $conex->abrir_conexion();
+        $sql = "UPDATE cola SET fecha_hora_fin=NULL , estado_id=$estado_id where id=$id";
+        $conex->consulta_bd($sql);
+        return 1;
+    }
+
     function trasladarPaciente($estacion_origen, $estacion_destino, $prioridad=0)
     {
         $conex = new Sql();

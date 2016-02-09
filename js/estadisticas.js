@@ -12,7 +12,6 @@ function cargarColas(){
             console.log(resp);
         },
         success:function(response){
-            console.log(response);
             estaciones=response["estaciones"];
             _estaciones=estaciones;
             colas=response["porEstacion"];
@@ -85,7 +84,7 @@ function ver_cola(estacion_id){
     strHTML="";
     band=0;
     cont=0;
-    if(_colas_ordenadas[estacion_id][1]==undefined){
+    if(!(_colas_ordenadas[estacion_id]) || _colas_ordenadas[estacion_id][1]==undefined || _colas_ordenadas[estacion_id]==undefined){
         alert("¡No tiene tickets en colas!");
         return;
     }

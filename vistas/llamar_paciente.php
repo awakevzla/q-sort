@@ -104,6 +104,7 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
                                 <?php
                                 }
                                 ?>
+                                <button class="btn btn-primary estaciones" id="rellamar"><i class="fa fa-exchange"></i> Re-Llamar</button><br><br>
                                 <button class="btn btn-danger estaciones" id="cerrar"><span
                                         class="glyphicon glyphicon-ban-circle"></span> Cerrar
                                     Ticket</button><br><br>

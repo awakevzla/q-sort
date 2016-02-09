@@ -18,7 +18,29 @@ $(document).ready(function () {
         setTimeout(function(){
           $("#llamar").attr("disabled", false);
         },5000);
+    })
+
+    //desde aqui comienzo la funcion re-llamar
+    $("#rellamar").click(function () {
+        id=$("#ticket").data("idatend");
+        atiende=$("#ticket").text();
+        if (atiende!="---/---"){
+            REllamar(id,3);                     //(2) HAY QUE CAMBIARLO POR LA VARIABLE ESTACION ACTUAL
+            //console.log(id);
+            $('#rellamar').attr("disabled", true);
+            setTimeout(function(){
+                REllamar(id,2);
+                $("#rellamar").attr("disabled", false);
+            },5000);
+        }else{
+            //$("#llamar").click();           <---- DEBERIA LLAMAR A OTRO TIcKET PERO FALTA HACERLO
+            alert("No está atendiendo a Ningún Paciente");
+        }
+
     });
+    //hasta aqui
+
+
     $("#trasladar").click(function () {
         $("#contOpcion").slideUp();
         $("#contEstaciones").slideDown();
@@ -128,6 +150,33 @@ function llamarPaciente(est, transferir, padre, prioridad){
                 alert("No hay pacientes en espera!");
             }
             atendiendo(est, padre);
+        }
+    });
+}
+///************FUNCION RE-LLAMAR PACIENTE****************************/
+function REllamar(id,estado_id){
+    $.ajax({
+        url     :"../controladores/controladores_generar_ticket.php",
+        data    : {id:id,estado_id:estado_id,band:"rellamar"},
+        dataType:"text",
+        type    :"post",
+        error   : function(resp){
+            alert("!Ha ocurrido un error!");
+        },
+        success:function(response){
+            console.log(response);
+            if (response=="1"){
+                if (estado_id==3) {
+                    $("#rellamar").html("Llamando al Paciente");
+                    return;
+                }else{
+                    $("#rellamar").html("Re-Llamar");
+                }
+            }else{
+                alert("Ocurrió un inconveniente al cerrar ticket, intente nuevamente o comuníquese con el administrador");
+                location.reload();
+            }
+            //atendiendo(est, padre);
         }
     });
 }

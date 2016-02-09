@@ -63,4 +63,9 @@ switch ($band) {
         $estacion_id=intval($_REQUEST["estacion_id"]);
         echo $ticket->cerrarTicketAtendiendo($estacion_id);
         break;
+    case 'rellamar':
+        $id=intval($_REQUEST["id"]);
+        $estado_id=intval($_REQUEST["estado_id"]);
+        echo $ticket->rellamarTicket($id,$estado_id);
+        break;
 }

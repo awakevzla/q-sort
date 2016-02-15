@@ -148,6 +148,9 @@ function llamarPaciente(est, transferir, padre, prioridad){
             console.log(response);
             if (response=="0"){
                 alert("No hay pacientes en espera!");
+            }else if(response=='error_duplicado'){
+                alert("Ocurrió un inconveniente al llamar paciente, intente nuevamente");
+                location.reload();
             }
             atendiendo(est, padre);
         }

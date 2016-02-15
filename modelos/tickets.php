@@ -128,10 +128,19 @@ class Tickets
         $stm = $this->con->consulta_bd($sql);
         $ticket = $this->con->obtener_fila_consulta($stm, Sql::ARRAY_ASOCIATIVO);
         if ($ticket) {
-            $fechaHora=date('Y-m-d H:i:s');
-            $this->generasql("cola", "fecha_hora_atencion", "$fechaHora");
-            $this->generasql("cola", "estacion_id",$auxest);
-            $this->generasql("cola", "estado_id", 2, true, true, "where id=" . $ticket["id"]);
+            $sql="SELECT id from cola where date_format(fecha_hora_inicio, '%d-%m-%Y') = date_format(CURDATE(), '%d-%m-%Y') and estacion_id=$auxest and estado_id=2";
+            $this->con->abrir_conexion();
+            $stm=$this->con->consulta_bd($sql);
+            $atend=$this->con->obtener_numero_registros($stm);
+            syslog(1, $auxest);
+            if ($atend<1){
+                $fechaHora=date('Y-m-d H:i:s');
+                $this->generasql("cola", "fecha_hora_atencion", "$fechaHora");
+                $this->generasql("cola", "estacion_id",$auxest);
+                $this->generasql("cola", "estado_id", 2, true, true, "where id=" . $ticket["id"]);
+            }else{
+                return "error_duplicado";
+            }
         } else {
             return 0;
         }

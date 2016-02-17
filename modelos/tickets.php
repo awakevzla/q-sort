@@ -94,7 +94,7 @@ class Tickets
     function getAtendiendo($est, $padre=0)
     {
 
-        $sql = "SELECT id, ticket, 0 as clEspera, correlativo, estacion_id from cola WHERE estacion_id=$est and estado_id=2 and date_format(fecha_hora_inicio, '%d-%m-%Y') = date_format(CURDATE(), '%d-%m-%Y');";
+        $sql = "SELECT id, ticket, 0 as clEspera, correlativo, estacion_id, vip from cola WHERE estacion_id=$est and estado_id=2 and date_format(fecha_hora_inicio, '%d-%m-%Y') = date_format(CURDATE(), '%d-%m-%Y');";
         $this->con->abrir_conexion();
         $stm = $this->con->consulta_bd($sql);
         $ticket = $this->con->obtener_fila_consulta($stm, Sql::ARRAY_ASOCIATIVO);
@@ -312,12 +312,13 @@ class Tickets
         $conex->abrir_conexion();
         $atendiendo = $this->getAtendiendo($estacion_origen);
         $id = $atendiendo["id"];
+        $vip= $atendiendo["vip"];
         if ($id) {
             $this->cerrarTicket($id);
         } else {
             return "No hay paciente en atencion";
         }
-        if ($prioridad==1){
+        if ($prioridad==1 or $vip==1){
             $sql = "INSERT INTO cola (correlativo, ticket, estacion_id, estado_id, vip) VALUES ('" . $atendiendo["correlativo"] . "', '" . $atendiendo["ticket"] . "', $estacion_destino, 1, 1)";
         }else{
             $sql = "INSERT INTO cola (correlativo, ticket, estacion_id, estado_id) VALUES ('" . $atendiendo["correlativo"] . "', '" . $atendiendo["ticket"] . "', $estacion_destino, 1)";
@@ -417,5 +418,19 @@ class Tickets
             $array[$k]["estacion"]=utf8_decode($v["estacion"]);
         }
         return $array;
+    }
+
+    function getCantidadRegistro($est){
+        $this->con->abrir_conexion();
+        $atend=$this->getAtendiendo($est);
+        $correlativo=(isset($atend["correlativo"]))?$atend["correlativo"]:0;
+        if ($correlativo){
+            $sql="SELECT * from cola where correlativo='$correlativo' and date(fecha_hora_inicio)=CURDATE()";
+            $stm=$this->con->consulta_bd($sql);
+            $cant=$this->con->obtener_numero_registros($stm);
+            return $cant;
+        }else{
+            return 0;
+        }
     }
 }

@@ -83,6 +83,8 @@ $usuario=$sesion->getNombre_usuario()." ".$sesion->getApellido_usuario();
                                 ?>
                                 <li><a class="menu" href="vistas/gestionar_usuarios.php"><span class="glyphicon glyphicon-align-justify"></span>
                                         Gestión de Usuario</a></li>
+                                <li><a class="menu" href="vistas/configuracion_general.php"><span class="glyphicon glyphicon-cog"></span>
+                                        Configuraciones Generales</a></li>
                                 <?php
                             }
                             ?>

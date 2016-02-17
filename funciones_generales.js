@@ -2,18 +2,86 @@ $(document).ready(function () {
     $("#contEstaciones").hide();
     $('#boton').attr("disabled", true);
     atendiendo(est, padre);
-
     $("#llamar").click(function () {
         //llamarPaciente($(".selEstacion").val());
         trans=transferir;
         atiende=$("#ticket").text();
+        cantidad_registros=0;
         if (atiende!="---/---"){
             if (!confirm("¿Desea transferir el paciente a "+transferir_est+"?")){
                 trans=0;
+                llamarPaciente(est, trans, padre, prioridad);
+                $('#llamar').attr("disabled", true);
+            }else{
+                $.ajax({
+                    url     :"../controladores/controladores_generar_ticket.php",
+                    data    : {est:est,band:"getCantidadRegistro"},
+                    dataType:"text",
+                    type    :"post",
+                    async   :false,
+                    error   : function(resp){
+                        alert("!Ha ocurrido un error!");
+                        console.log(resp);
+                    },
+                    success: function(resp){
+                        cantidad_registros=parseInt(resp);
+                    }
+                });
+                console.log(cantidad_registros);
+                if (cantidad_registros>maximo_transferencia){
+                    swal({
+                        title: "Demasiadas Transferencias",
+                        text: "¡Éste ticket posee "+maximo_transferencia+" transferencias!, ¿Desea transferir de todas formas?",
+                        type: "input",
+                        inputType: "password",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        closeOnCancel:false,
+                        animation: "slide-from-top",
+                        inputPlaceholder: "Ingrese contraseña"
+                    }, function(inputValue){
+                        if (inputValue === false){
+                            trans=0;
+                            llamarPaciente(est, trans, padre, prioridad);
+                            swal("Ticket Cerrado", "El Ticket en atención fue cerrado con éxito!", "success");
+                            return false;
+                        }
+                        if (inputValue === "") {
+                            swal.showInputError("Debe escribir la contraseña");
+                            return false
+                        }
+                        console.log(inputValue);
+                        $.ajax({
+                            url     :"../controladores/controladores_usuarios.php",
+                            data    : {clave:inputValue,band:"validarClave"},
+                            dataType:"text",
+                            type    :"post",
+                            async   :false,
+                            error   : function(resp){
+                                alert("!Ha ocurrido un error!");
+                                console.log(resp);
+                            },
+                            success: function(resp){
+                                console.log(resp);
+                                if (parseInt(resp)==1){
+                                    llamarPaciente(est, trans, padre, prioridad);
+                                    swal("Transferido", "El Ticket fue transferido!", "success");
+                                }else if(parseInt(resp)>1){
+                                    swal("Error", "Ocurrió un error, intente nuevamente", "error");
+                                }else{
+                                    swal("Error", "Contraseña Incorrecta, intente nuevamente", "error");
+                                }
+                            }
+                        });
+                    });
+                    $('#llamar').attr("disabled", true);
+                }else{
+                    llamarPaciente(est, trans, padre, prioridad);
+                }
             }
+        }else{
+            llamarPaciente(est, trans, padre, prioridad);
         }
-        llamarPaciente(est, trans, padre, prioridad);                     //(2) HAY QUE CAMBIARLO POR LA VARIABLE ESTACION ACTUAL
-        $('#llamar').attr("disabled", true);
 
         setTimeout(function(){
           $("#llamar").attr("disabled", false);
@@ -122,6 +190,7 @@ function atendiendo(est, padre){
             console.log(resp);
         },
         success:function(response){
+            console.log(response);
             response=response.respuesta;
             if (response["correlativo"]==undefined){   // SI NO ESTA ATENDIENDO A NADIE
                 $("#ticket").html("---/---");
@@ -147,7 +216,12 @@ function llamarPaciente(est, transferir, padre, prioridad){
         success:function(response){
             console.log(response);
             if (response=="0"){
-                alert("No hay pacientes en espera!");
+                swal({
+                    title: "Atención",
+                    text: "No hay pacientes en espera!",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
             }else if(response=='error_duplicado'){
                 alert("Ocurrió un inconveniente al llamar paciente, intente nuevamente");
                 location.reload();

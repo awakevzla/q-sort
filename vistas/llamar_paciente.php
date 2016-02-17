@@ -1,11 +1,14 @@
 <?php
 include "../modelos/tickets.php";
 include "../clases/Sesion.php";
+include "../modelos/configuracion.php";
+$configuracion= new Configuracion();
 $sesion = new Sesion();
 $modulo = new Tickets();
 if ($sesion->sesion_iniciada() == false) {
     header('location:../login.php');
 }
+$maximo_transferencia=$configuracion->maximo_transferencia;
 $pertenece = $sesion->getEstacion_pertenece();
 $estacionInfo=$modulo->getEstacion($pertenece);
 $transferir=$estacionInfo[0]["transferir_id"];
@@ -29,11 +32,14 @@ $estacionPertenece = $modulo->getEstacionPertenece($pertenece);
     <!-- Bootstrap -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../dist/sweetalert.css">
     <link rel="stylesheet" href="../font-awesome/css/font-awesome.css">
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../dist/sweetalert.min.js"></script>
     <script>
         var est =<?= $pertenece;?>;
         var transferir =<?= $transferir;?>;
+        var maximo_transferencia =<?= $maximo_transferencia;?>;
         var padre =<?= $padre;?>;
         var transferir_est ='<?= $transf_estacion;?>';
         var prioridad ='<?= $prioridad;?>';

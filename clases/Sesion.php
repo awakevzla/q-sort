@@ -40,6 +40,15 @@ class Sesion
             return false;
     }
 
+    function verificarClave($clave){
+        $this->con->abrir_conexion();
+        $login=$this->getLogin();
+        $sql="SELECT * from usuarios where login='$login' and clave=md5('$clave')";
+        $stm=$this->con->consulta_bd($sql);
+        $result=$this->con->obtener_numero_registros($stm);
+        return $result;
+    }
+
     function crear_sesion($usuario, $clave)
     {
         $this->con->abrir_conexion();

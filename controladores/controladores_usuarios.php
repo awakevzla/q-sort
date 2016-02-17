@@ -54,4 +54,8 @@ switch ($band){
         $usuario_id=$sesion->getId_usuario();
         echo $usuarios->cambiarClave($usuario_id, $clave_anterior, $clave_nueva);
         break;
+    case 'validarClave':
+        $clave=$_REQUEST["clave"];
+        echo $sesion->verificarClave($clave);
+        break;
 }

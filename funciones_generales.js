@@ -6,12 +6,12 @@ $(document).ready(function () {
         //llamarPaciente($(".selEstacion").val());
         trans=transferir;
         atiende=$("#ticket").text();
+        $('#llamar').attr("disabled", true);
         cantidad_registros=0;
         if (atiende!="---/---"){
             if (!confirm("¿Desea transferir el paciente a "+transferir_est+"?")){
                 trans=0;
                 llamarPaciente(est, trans, padre, prioridad);
-                $('#llamar').attr("disabled", true);
             }else{
                 $.ajax({
                     url     :"../controladores/controladores_generar_ticket.php",
@@ -74,12 +74,12 @@ $(document).ready(function () {
                             }
                         });
                     });
-                    $('#llamar').attr("disabled", true);
                 }else{
                     llamarPaciente(est, trans, padre, prioridad);
                 }
             }
         }else{
+            $('#llamar').attr("disabled", true);
             llamarPaciente(est, trans, padre, prioridad);
         }
 
@@ -96,9 +96,11 @@ $(document).ready(function () {
             REllamar(id,3);                     //(2) HAY QUE CAMBIARLO POR LA VARIABLE ESTACION ACTUAL
             //console.log(id);
             $('#rellamar').attr("disabled", true);
+            $('#llamar').attr("disabled", true);
             setTimeout(function(){
                 REllamar(id,2);
                 $("#rellamar").attr("disabled", false);
+                $("#llamar").attr("disabled", false);
             },5000);
         }else{
             //$("#llamar").click();           <---- DEBERIA LLAMAR A OTRO TIcKET PERO FALTA HACERLO

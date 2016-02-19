@@ -166,6 +166,30 @@ INSERT INTO `tipos_eventos` (`id`, `nombre`) VALUES
 
 -- --------------------------------------------------------
 
+
+CREATE TABLE IF NOT EXISTS `registro_log` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `fecha_hora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ip` varchar(15) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `registro_operaciones`
+--
+
+CREATE TABLE IF NOT EXISTS `registro_operaciones` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `tipo_evento` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `evento` text COLLATE utf8_spanish2_ci NOT NULL,
+  `fecha_hora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ip` varchar(15) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+
 --
 -- Estructura de tabla para la tabla `tipos_eventos_2`
 --
@@ -368,6 +392,34 @@ ADD CONSTRAINT `cola_ibfk_2` FOREIGN KEY (`estacion_id`) REFERENCES `estaciones`
 --
 ALTER TABLE `eventos`
 ADD CONSTRAINT `eventos_id` FOREIGN KEY (`tipo_id`) REFERENCES `tipos_eventos` (`id`);
+
+
+--
+-- Indices de la tabla `registro_log`
+--
+ALTER TABLE `registro_log`
+ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `registro_operaciones`
+--
+ALTER TABLE `registro_operaciones`
+ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `registro_log`
+--
+ALTER TABLE `registro_log`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT de la tabla `registro_operaciones`
+--
+ALTER TABLE `registro_operaciones`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

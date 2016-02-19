@@ -7,6 +7,8 @@ $(document).ready(function () {
         trans=transferir;
         atiende=$("#ticket").text();
         $('#llamar').attr("disabled", true);
+        $('#rellamar').attr("disabled", true);
+        $('#cerrar').attr("disabled", true);
         cantidad_registros=0;
         if (atiende!="---/---"){
             if (!confirm("¿Desea transferir el paciente a "+transferir_est+"?")){
@@ -80,11 +82,16 @@ $(document).ready(function () {
             }
         }else{
             $('#llamar').attr("disabled", true);
+            $('#rellamar').attr("disabled", true);
+            $('#cerrar').attr("disabled", true);
             llamarPaciente(est, trans, padre, prioridad);
         }
 
         setTimeout(function(){
-          $("#llamar").attr("disabled", false);
+            $("#llamar").attr("disabled", false);
+            $('#rellamar').attr("disabled", false);
+            $('#cerrar').attr("disabled", false);
+
         },5000);
     })
 
@@ -97,10 +104,12 @@ $(document).ready(function () {
             //console.log(id);
             $('#rellamar').attr("disabled", true);
             $('#llamar').attr("disabled", true);
+            $('#cerrar').attr("disabled", true);
             setTimeout(function(){
                 REllamar(id,2);
                 $("#rellamar").attr("disabled", false);
                 $("#llamar").attr("disabled", false);
+                $('#cerrar').attr("disabled", false);
             },5000);
         }else{
             //$("#llamar").click();           <---- DEBERIA LLAMAR A OTRO TIcKET PERO FALTA HACERLO

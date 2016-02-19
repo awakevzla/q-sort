@@ -1,5 +1,6 @@
 <?php
 include_once '../modelos/tickets.php';
+include_once '../clases/Auditoria.php';
 $ticket = new Tickets();//Amonestado, por Asesino de Felinos
 $band = $_REQUEST["band"];
 switch ($band) {
@@ -8,6 +9,8 @@ switch ($band) {
         $estid = $_REQUEST["estid"];
         $vip=$_REQUEST["vip"];
         $result["respuesta"] = $ticket->generarTicket($pref, $estid, $vip);
+        $aud = new Auditoria();
+        $aud->registro_operacion($aud::REGISTRAR, 'GENERACIÓN DE TICKET: '.$result["respuesta"]["ticket"].". VIP: ".(($vip==1)?"Si":"No"));
         echo json_encode($result);
         break;
     case 'atendiendo':

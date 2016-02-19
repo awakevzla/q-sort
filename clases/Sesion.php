@@ -69,6 +69,7 @@ class Sesion
             $resp["resp"]=1;
             $sql="update usuarios set intentos = 0 WHERE login=lower('".$usuario[0]["login"]."')";
             $this->con->consulta_bd($sql);
+            $this->registro_logueo();
             return $resp;
         }else if (count($datos)==1 && $datos[0]["baneado"]==1){
             $resp["resp"]=2;
@@ -100,6 +101,27 @@ class Sesion
             $resp["motivo"]="otro";
             return $resp;
         }
+    }
+
+    function registro_logueo(){
+        $this->con->abrir_conexion();
+        $ip=$this->obtener_ip();
+        $sql="INSERT INTO registro_log (usuario_id, ip) VALUES ($this->id_usuario, '$ip')";
+        try{
+            $this->con->consulta_bd($sql);
+        }catch (PDOException $e){
+            return $e->getMessage();
+        }
+        return 1;
+    }
+
+    function obtener_ip(){
+        if(!empty($_SERVER["HTTP_X_FORWARDED_FOR"]))
+            return $_SERVER["HTTP_X_FORWARDED_FOR"];
+        else if(!empty($_SERVER["HTTP_CLIENT_IP"]))
+            return $_SERVER["HTTP_CLIENT_IP"];
+        else
+            return $_SERVER["REMOTE_ADDR"];
     }
 
     function destruir_sesion()

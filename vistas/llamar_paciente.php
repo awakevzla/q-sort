@@ -10,6 +10,9 @@ if ($sesion->sesion_iniciada() == false) {
 }
 $maximo_transferencia=$configuracion->maximo_transferencia;
 $pertenece = $sesion->getEstacion_pertenece();
+if (!$pertenece){
+    die("<script>alert('Éste usuario no posee estación asociada!');</script>");
+}
 $estacionInfo=$modulo->getEstacion($pertenece);
 $transferir=$estacionInfo[0]["transferir_id"];
 $padre=$estacionInfo[0]["id_padre"];

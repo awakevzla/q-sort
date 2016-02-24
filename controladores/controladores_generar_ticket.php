@@ -68,8 +68,7 @@ switch ($band) {
         break;
     case 'rellamar':
         $id=intval($_REQUEST["id"]);
-        $estado_id=intval($_REQUEST["estado_id"]);
-        echo $ticket->rellamarTicket($id,$estado_id);
+        echo $ticket->rellamarTicket($id);
         break;
     case 'getCantidadRegistro':
         $est=$_REQUEST["est"];

@@ -12,6 +12,7 @@ function cargarColas(){
             console.log(resp);
         },
         success:function(response){
+            console.log(response);
             estaciones=response["estaciones"];
             _estaciones=estaciones;
             colas=response["porEstacion"];
@@ -50,12 +51,14 @@ function cargarColas(){
                                 bandCola++;
                             });
                         }
-                        $.each(colas[v["id"]][1][0], function (l, m) {
-                            if (bandCola<4){
-                                strHTML+="<td>"+m["ticket"]+"</td>";
-                                bandCola++;
-                            }
-                        });
+                        if (colas[v["id"]][1][0]!=undefined){
+                            $.each(colas[v["id"]][1][0], function (l, m) {
+                                if (bandCola<4){
+                                    strHTML+="<td>"+m["ticket"]+"</td>";
+                                    bandCola++;
+                                }
+                            });
+                        }
                     }else{
                     }
                     if (bandCola<4){

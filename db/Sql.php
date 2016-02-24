@@ -86,7 +86,9 @@
 		   		}else
 		   			return $this->pdo_statement;
 		   	}catch (Exception $e){
-		   		echo "<b>ERROR: </b>".htmlentities($e->getMessage());
+				$error["codigo"]=$e->getCode();
+				$error["mensaje"]=$e->getMessage();
+		   		echo json_encode($error);
 		   	}
 		   	
 	   }

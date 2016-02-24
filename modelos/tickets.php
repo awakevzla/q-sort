@@ -137,6 +137,7 @@ class Tickets
                 $fechaHora=date('Y-m-d H:i:s');
                 $this->generasql("cola", "fecha_hora_atencion", "$fechaHora");
                 $this->generasql("cola", "estacion_id",$auxest);
+                $this->generasql("cola", "llamados", "llamados+1", false, false, "", false, true);
                 $this->generasql("cola", "estado_id", 2, true, true, "where id=" . $ticket["id"]);
             }else{
                 return "error_duplicado";
@@ -162,7 +163,7 @@ class Tickets
     }
 
 
-    function generasql($ptabla, $pcampo, $pvalor, $termina = false, $remplaza = false, $pfor = "", $solouno = false)
+    function generasql($ptabla, $pcampo, $pvalor, $termina = false, $remplaza = false, $pfor = "", $solouno = false, $incrementa=false)
     {
         // global $campo, $tabla,$creada,$valor,$campo,$valor,$creada;
         if (($termina == false) || ($solouno == true)) {
@@ -180,7 +181,10 @@ class Tickets
         array_push($this->campo, $pcampo);
         switch (gettype($pvalor)) {
             case 'string':
-                array_push($this->valor, "'" . trim($pvalor) . "'");
+                if ($incrementa)
+                    array_push($this->valor, trim($pvalor));
+                else
+                    array_push($this->valor, "'" . trim($pvalor) . "'");
                 break;
             case 'integer':
                 array_push($this->valor, strval($pvalor));
@@ -297,11 +301,11 @@ class Tickets
         $conex->consulta_bd($sql);
     }
 
-    function rellamarTicket($id,$estado_id)
+    function rellamarTicket($id)
     {
         $conex = new Sql();
         $conex->abrir_conexion();
-        $sql = "UPDATE cola SET fecha_hora_fin=NULL , estado_id=$estado_id where id=$id";
+        $sql = "UPDATE cola SET llamados=llamados+1 where id=$id";
         $conex->consulta_bd($sql);
         return 1;
     }

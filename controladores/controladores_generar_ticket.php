@@ -67,7 +67,12 @@ switch ($band) {
         echo $ticket->cerrarTicketAtendiendo($estacion_id);
         break;
     case 'rellamar':
-        $id=intval($_REQUEST["id"]);
+        $est=intval($_REQUEST["est"]);
+        $id_atend=$ticket->getAtendiendo($est);
+        $id=$id_atend["id"];
+        if (intval($id)<0){
+            die("No tiene ticket atendiendo!");
+        }
         echo $ticket->rellamarTicket($id);
         break;
     case 'getCantidadRegistro':

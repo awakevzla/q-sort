@@ -14,6 +14,10 @@ $(document).ready(function () {
             if (!confirm("¿Desea transferir el paciente a "+transferir_est+"?")){
                 trans=0;
                 llamarPaciente(est, trans, padre, prioridad);
+			swal("Ticket Cerrado", "El Ticket en atención fue cerrado con éxito!", "success");
+		    setTimeout(function(){
+				location.reload();
+        		},2000);
             }else{
                 $.ajax({
                     url     :"../controladores/controladores_generar_ticket.php",
@@ -46,10 +50,18 @@ $(document).ready(function () {
                             trans=0;
                             llamarPaciente(est, trans, padre, prioridad);
                             swal("Ticket Cerrado", "El Ticket en atención fue cerrado con éxito!", "success");
+					setTimeout(function(){
+						location.reload();
+        				},3000);
+
+					
                             return false;
                         }
                         if (inputValue === "") {
                             swal.showInputError("Debe escribir la contraseña");
+					setTimeout(function(){
+						location.reload();
+        				},1000);
                             return false
                         }
                         console.log(inputValue);
@@ -68,8 +80,10 @@ $(document).ready(function () {
                                 if (parseInt(resp)==1){
                                     llamarPaciente(est, trans, padre, prioridad);
                                     swal("Transferido", "El Ticket fue transferido!", "success");
+						location.reload();
                                 }else if(parseInt(resp)>1){
                                     swal("Error", "Ocurrió un error, intente nuevamente", "error");
+						location.reload();
                                 }else{
                                     swal("Error", "Contraseña Incorrecta, intente nuevamente", "error");
                                 }
@@ -93,14 +107,15 @@ $(document).ready(function () {
             $('#cerrar').attr("disabled", false);
 
         },5000);
-    })
+    });
 
     //desde aqui comienzo la funcion re-llamar
     $("#rellamar").click(function () {
+	  atendiendo(est, padre);
         id=$("#ticket").data("idatend");
         atiende=$("#ticket").text();
         if (atiende!="---/---"){
-            REllamar(id);                     //(2) HAY QUE CAMBIARLO POR LA VARIABLE ESTACION ACTUAL
+            REllamar(est);                     //(2) HAY QUE CAMBIARLO POR LA VARIABLE ESTACION ACTUAL
             //console.log(id);
             $('#rellamar').attr("disabled", true);
             $('#llamar').attr("disabled", true);
@@ -241,10 +256,10 @@ function llamarPaciente(est, transferir, padre, prioridad){
     });
 }
 ///************FUNCION RE-LLAMAR PACIENTE****************************/
-function REllamar(id){
+function REllamar(est){
     $.ajax({
         url     :"../controladores/controladores_generar_ticket.php",
-        data    : {id:id,band:"rellamar"},
+        data    : {est:est,band:"rellamar"},
         dataType:"text",
         type    :"post",
         error   : function(resp){
@@ -256,7 +271,7 @@ function REllamar(id){
 
             }else{
                 alert("Ocurrió un inconveniente al cerrar ticket, intente nuevamente o comuníquese con el administrador");
-                location.reload();
+                //location.reload();
             }
             //atendiendo(est, padre);
         }
